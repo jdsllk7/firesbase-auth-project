@@ -10,6 +10,7 @@ adminForm.addEventListener('submit', (e) => {
   });
 });
 
+
 // listen for auth status changes
 auth.onAuthStateChanged(user => {
   if (user) {
@@ -62,7 +63,7 @@ signupForm.addEventListener('submit', (e) => {
     const modal = document.querySelector('#modal-signup');
     M.Modal.getInstance(modal).close();
     signupForm.reset();
-    signupForm.querySelector('.error').innerHTML = ''
+    signupForm.querySelector('.error').innerHTML = '';
   }).catch(err => {
     signupForm.querySelector('.error').innerHTML = err.message;
   });
@@ -73,6 +74,7 @@ const logout = document.querySelector('#logout');
 logout.addEventListener('click', (e) => {
   e.preventDefault();
   auth.signOut();
+  console.log("You've logged out!")
 });
 
 // login
