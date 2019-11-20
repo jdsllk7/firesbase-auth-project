@@ -1,16 +1,16 @@
 // add admin cloud function
-const adminForm = document.querySelector('.admin-actions');
-adminForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+// const adminForm = document.querySelector('.admin-actions');
+// adminForm.addEventListener('submit', (e) => {
+//   e.preventDefault();
 
-  const adminEmail = document.querySelector('#admin-email').value;
-  const addAdminRole = functions.httpsCallable('addAdminRole');
-  addAdminRole({
-    email: adminEmail
-  }).then(result => {
-    console.log(result);
-  });
-});
+//   const adminEmail = document.querySelector('#admin-email').value;
+//   const addAdminRole = functions.httpsCallable('addAdminRole');
+//   addAdminRole({
+//     email: adminEmail
+//   }).then(result => {
+//     console.log(result);
+//   });
+// });
 
 
 // listen for auth status changes
@@ -52,23 +52,23 @@ signupForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   // get user info
-  const email = signupForm['signup-email'].value;
-  const password = signupForm['signup-password'].value;
+  // const email = signupForm['signup-email'].value;
+  // const password = signupForm['signup-password'].value;
 
-  // sign up the user & add firestore data
-  auth.createUserWithEmailAndPassword(email, password).then(cred => {
-    return db.collection('users').doc(cred.user.uid).set({
-      bio: signupForm['signup-bio'].value
-    });
-  }).then(() => {
-    // close the signup modal & reset form
-    const modal = document.querySelector('#modal-signup');
-    M.Modal.getInstance(modal).close();
-    signupForm.reset();
-    signupForm.querySelector('.error').innerHTML = '';
-  }).catch(err => {
-    signupForm.querySelector('.error').innerHTML = err.message;
-  });
+  // // sign up the user & add firestore data
+  // auth.createUserWithEmailAndPassword(email, password).then(cred => {
+  //   return db.collection('users').doc(cred.user.uid).set({
+  //     bio: signupForm['signup-bio'].value
+  //   });
+  // }).then(() => {
+  //   // close the signup modal & reset form
+  //   const modal = document.querySelector('#modal-signup');
+  //   M.Modal.getInstance(modal).close();
+  //   signupForm.reset();
+  //   signupForm.querySelector('.error').innerHTML = '';
+  // }).catch(err => {
+  //   signupForm.querySelector('.error').innerHTML = err.message;
+  // });
 });
 
 // logout
@@ -78,6 +78,18 @@ logout.addEventListener('click', (e) => {
   auth.signOut();
   home_out();
   console.log("You've logged out!")
+});
+// logout2
+const logout2 = document.querySelector('#logout2');
+logout2.addEventListener('click', (e) => {
+  e.preventDefault();
+  auth.signOut();
+  home_out();
+  console.log("You've logged out!");
+  var text = '<span>STATUS: Thank you, Goodbye...</span>';
+  M.toast({
+    html: text
+  });
 });
 
 // login
@@ -100,6 +112,10 @@ loginForm.addEventListener('submit', (e) => {
     loginForm.querySelector('.error').innerHTML = '';
     login_btn.innerHTML = "Login";
     home();
+    var text = '<span>STATUS: Welcome to TeleHealth...</span>';
+    M.toast({
+      html: text
+    });
   }).catch(err => {
     loginForm.querySelector('.error').innerHTML = err.message;
     login_btn.innerHTML = "Login";

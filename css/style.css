@@ -6,8 +6,8 @@
     left: 3px;
     margin-top: 5px;
   }
-  input,textarea{
-    /* color: white; */
+  #patient_form_id input, #patient_form_id textarea{
+    color: white;
   }
   
   a{

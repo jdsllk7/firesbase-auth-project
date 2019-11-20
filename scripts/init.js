@@ -2,8 +2,8 @@
 var instances;
 document.addEventListener('DOMContentLoaded', function () {
 
-    // var elems = document.querySelectorAll('select');
-    // var instances = M.FormSelect.init(elems, options);
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems, {});
 
     var modals = document.querySelectorAll('.modal');
     M.Modal.init(modals);
@@ -17,4 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // $('input#input_text, textarea#textarea1').characterCounter();
   
+  });
+
+  $(document).ready(function () {
+    $('.progress').fadeOut();
   });

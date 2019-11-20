@@ -8,6 +8,7 @@
   <!-- Compiled and minified CSS -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -22,7 +23,7 @@
         <a href="#" data-target="slide-out" class="sidenav-trigger">
           <i class="material-icons">menu</i>
         </a>
-        <a href="#" onclick="home()" class="sidenav-trigger right logged-in" style="display: none;">
+        <a href="#" onclick="home()" class="sidenav-trigger right logged-in" id="home_link" style="display: none;">
           <i class="material-icons">home</i></a>
 
         <a href="#" class="white-text hide-on-large-only sidenav-trigger modal-trigger right logged-out"
@@ -34,22 +35,27 @@
           <li class="adminzzz" style="display: none;">
             <a href="#" class="white-text modal-trigger" data-target="modal-create">Create Guide</a>
           </li>
-          <li class="logged-in" style="display: none;">
+          <li class="logged-in" style="display: none;" id="send_links1">
             <a href="#" class="white-text" id="">Send Tests</a>
           </li>
-          <li class="logged-in" style="display: none;">
+          <li class="logged-in" id="review_links1" style="display: none;">
             <a href="#" class="white-text" id="">Reviewed Records</a>
           </li>
           <li class="logged-in" style="display: none;">
-            <a href="#" class="white-text" id="logoutzzz">Logout</a>
+            <a href="#" class="white-text" id="logout">Logout</a>
           </li>
           <li class="logged-out" style="display: none;">
             <a href="#" class="white-text modal-trigger" data-target="modal-login">Login</a>
           </li>
         </ul>
       </div>
+      <div class="progress" style="margin: 0;">
+        <div class="indeterminate"></div>
+      </div>
     </nav>
+
   </div>
+
 
   <ul id="slide-out" class="sidenav sidenav grey darken-3">
     <li>
@@ -77,58 +83,36 @@
         Guide</a>
     </li>
     <li class="logged-in" style="display: none;">
-      <a href="#" class="white-text sidenav-close" id="logout">Logout</a>
+      <a href="#" class="white-text sidenav-close" id="logout2">Logout</a>
+    </li>
+    <li class="admin" style="display: none;">
+      <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-signup">Sign up</a>
     </li>
     <li>
       <div class="logged-in" class="divider"></div>
     </li>
     <li><a class="logged-in subheader white-text"><i class="material-icons white-text">print</i> PAGES</a></li>
-    <li class="logged-in" style="display: none;">
-      <a onclick="reviewed_records()" href="#" class="waves-effect white-text sidenav-close" id="">Reviewed Records</a>
+    <li class="logged-in" style="display: none;" id="review_links2">
+      <a onclick="reviewed_records()" href="#" class="waves-effect white-text sidenav-close"
+        id="">Reviewed Records</a>
     </li>
-    <li class="logged-in" style="display: none;">
-      <a onclick="send_records()" href="#" class="waves-effect white-text sidenav-close" id="">Send Tests
-        Records</a>
+    <li class="logged-in" style="display: none;" id="send_links2">
+      <a onclick="send_records()" href="#" class="waves-effect white-text sidenav-close" id="">Send
+        Tests Records</a>
     </li>
   </ul>
 
-  <!-- <ul class="sidenav grey darken-3" id="mobile-demo">
-    <li class="logged-in" style="display: none;">
-      <a href="#home" onclick="home()" class="sidenav-close white-text">Home</a>
-    </li>
-    <li class="logged-in" style="display: none;">
-      <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
-    </li>
-    <hr style="width:90%">
-    <li class="adminzzz" style="display: none;">
-      <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-create">Create
-        Guide</a>
-    </li>
-    <li class="logged-out" style="display: none;">
-      <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-login">Login</a>
-    </li>
-    <li class="logged-in" style="display: none;">
-      <a onclick="send_records()" href="#" class="white-text sidenav-close" id="">Send Tests Records</a>
-    </li>
-    <li class="logged-in" style="display: none;">
-      <a onclick="reviewed_records()" href="#" class="white-text sidenav-close" id="">Reviewed Records</a>
-    </li>
-    <li class="logged-in" style="display: none;">
-      <a href="#" class="white-text sidenav-close" id="logout">Logout</a>
-    </li>
-  </ul> -->
-
 
   <!-- ADMIN ACTIONS -->
-  <form class="center-align admin-actions adminzzz" style="margin: 40px auto; max-width: 300px; display: none;">
+  <!-- <form class="center-align admin-actions adminzzz" style="margin: 40px auto; max-width: 300px; display: none;">
     <input type="email" placeholder="User email" id="admin-email" required />
     <button class="btn-small green darken-3 z-depth-0">Make admin</button>
-  </form>
+  </form> -->
 
   <!-- SIGN UP MODAL -->
   <div id="modal-signup" class="modal">
     <div class="modal-content">
-      <h4>Sign up</h4><br />
+      <h4>Register Account</h4><br />
       <form id="signup-form">
         <div class="input-field">
           <input type="email" id="signup-email" required />
@@ -136,13 +120,20 @@
         </div>
         <div class="input-field">
           <input type="password" id="signup-password" required />
-          <label for="signup-password">Choose password</label>
+          <label for="signup-password">Enter Medical ID</label>
         </div>
-        <div class="input-field">
+        <!-- <div class="input-field">
           <input type="text" id="signup-bio" required />
           <label for="signup-bio">One Line Bio</label>
+        </div> -->
+        <div class="input-field">
+          <select id="signup-bio" required>
+            <option value="Health Agent" selected>Health Agent</option>
+            <option value="Doctor">Doctor</option>
+          </select>
+          <label class="white-text">Account Type</label>
         </div>
-        <button class="btn green darken-3 z-depth-0">Sign up</button>
+        <button class="btn green darken-3 z-depth-0">Submit</button>
         <p class="error pink-text center-align"></p>
       </form>
     </div>
@@ -200,6 +191,28 @@
 
 
 
+  <!---------------------------------------- ADMIN ------------------------------------------->
+  <div class="container center admin" id="admin_card" style="margin-top: 100px; display: none;">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card blue-grey lighten-5 z-depth-0">
+          <div class="card-content white-text">
+            <span class="card-title blue-grey-text">Welcome Back Boss</span>
+            <p class="blue-grey-text">This is your admin panel.
+              <hr style="width:90%;">
+            </p>
+            <p class="blue-grey-text">All Doctor and Health-Agent accounts can be registered right here.<br>
+            </p>
+          </div>
+          <div class="card-action">
+            <a href="#" class="green-text modal-trigger sidenav-close" data-target="modal-signup">Register Account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <!---------------------------------------- LOGGED OUT ------------------------------------------->
   <div class="container center logged-out" id="logged_out_card" style="margin-top: 100px; display: none;">
     <div class="row">
@@ -213,7 +226,7 @@
             <p class="blue-grey-text">You are currently logged out.<br>Please login to make use of the system.</p>
           </div>
           <div class="card-action">
-            <a class="modal-trigger" data-target="modal-login">Login</a>
+            <a href="#" class="green-text modal-trigger" data-target="modal-login">Login</a>
           </div>
         </div>
       </div>
@@ -222,7 +235,7 @@
 
 
 
-  <!---------------------------------------- CARDS ------------------------------------------->
+  <!---------------------------------------- HOME_CARDS ------------------------------------------->
   <div class="container center" id="home_cards" style="margin-top: 40px; display: none;">
     <div class="row">
       <div class="col s12 m12 l12">
@@ -233,7 +246,7 @@
               and administer medicator as instructed by the doctor.</p>
           </div>
           <div class="card-action">
-            <a onclick="reviewed_records()" href="#">Open</a>
+            <a class="green-text" onclick="reviewed_records()" href="#">Open</a>
           </div>
         </div>
       </div>
@@ -246,7 +259,7 @@
             <p class="blue-grey-text">Submit medical test records to nearby Doctors to have them reviewed.</p>
           </div>
           <div class="card-action">
-            <a onclick="send_records()" href="#">Open</a>
+            <a class="green-text" onclick="send_records()" href="#">Open</a>
           </div>
         </div>
       </div>
@@ -385,8 +398,9 @@
 
     <div style="margin-bottom:50px;" class="input-field col s6 offset-s3
         center">
-      <button class="btn waves-effect waves-light green darken-3" type="submit" name="patient_submit">submit<i class="material-icons
-            right">open_in_new</i>
+      <button class="btn waves-effect waves-light green darken-3" id="records_submit_btn" type="submit"
+        name="patient_submit">
+        submit <i class="material-icons right">open_in_new</i>
       </button>
     </div>
 
