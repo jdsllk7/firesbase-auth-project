@@ -16,6 +16,8 @@ const review_links1 = document.getElementById("review_links1");
 const review_links2 = document.getElementById("review_links2");
 const send_links1 = document.getElementById("send_links1");
 const send_links2 = document.getElementById("send_links2");
+const email_profile = document.getElementById("email_profile");
+
 
 
 function reviewed_records() {
@@ -52,6 +54,7 @@ function home_out() {
   records.style.display = "none";
   logged_out_card.style.display = "block";
   admin_card.style.display = "none";
+  // alert('home_out');
 }
 
 function admin() {
@@ -105,8 +108,9 @@ const setupUI = (user) => {
     }
     // account info
     db.collection('users').doc(user.uid).get().then(doc => {
+      email_profile.innerHTML = user.email;
       const html = `
-        <div>Logged in as ${user.email}</div>
+      Logged in as <span id="user_id" data-id="${user.uid}">${user.email}</span>
         <div>${doc.data().bio}</div>
         <div class="pink-text">${user.admin ? 'Admin' : ''}</div>
       `;
@@ -151,3 +155,5 @@ const setupGuides = (data) => {
   }
 
 };
+
+// const user_id = document.getElementById("user_id");

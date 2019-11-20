@@ -1,16 +1,46 @@
 // add admin cloud function
-// const adminForm = document.querySelector('.admin-actions');
-// adminForm.addEventListener('submit', (e) => {
-//   e.preventDefault();
+const adminForm = document.querySelector('.admin-actions');
+adminForm.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-//   const adminEmail = document.querySelector('#admin-email').value;
-//   const addAdminRole = functions.httpsCallable('addAdminRole');
-//   addAdminRole({
-//     email: adminEmail
-//   }).then(result => {
-//     console.log(result);
-//   });
-// });
+  status_upgrade_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
+
+  const adminEmail = document.querySelector('#admin-email').value;
+  const addAdminRole = functions.httpsCallable('addAdminRole');
+  addAdminRole({
+    email: adminEmail
+  }).then(result => {
+    console.log(result);
+
+    db.collection("users").where("email", "==", adminEmail)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+
+          db.collection('users').doc(doc.id).update({
+            bio: 'Command Center'
+          });
+
+          adminForm.reset();
+          var text = '<span>STATUS: Privilege Status Upgraded!</span>';
+          M.toast({
+            html: text
+          });
+        });
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+        var text = "<span>ERROR: Email Doesn't Exist!</span>";
+        M.toast({
+          html: text
+        });
+      });
+
+    status_upgrade_btn.innerHTML = "Make admin";
+  });
+});
 
 
 // listen for auth status changes
@@ -51,24 +81,37 @@ const signupForm = document.querySelector('#signup-form');
 signupForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  // get user info
-  // const email = signupForm['signup-email'].value;
-  // const password = signupForm['signup-password'].value;
+  sigup_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
 
-  // // sign up the user & add firestore data
-  // auth.createUserWithEmailAndPassword(email, password).then(cred => {
-  //   return db.collection('users').doc(cred.user.uid).set({
-  //     bio: signupForm['signup-bio'].value
-  //   });
-  // }).then(() => {
-  //   // close the signup modal & reset form
-  //   const modal = document.querySelector('#modal-signup');
-  //   M.Modal.getInstance(modal).close();
-  //   signupForm.reset();
-  //   signupForm.querySelector('.error').innerHTML = '';
-  // }).catch(err => {
-  //   signupForm.querySelector('.error').innerHTML = err.message;
-  // });
+  // get user info
+  const email = signupForm['signup-email'].value;
+  const password = signupForm['signup-password'].value;
+
+  // sign up the user & add firestore data
+  auth.createUserWithEmailAndPassword(email, password).then(cred => {
+    return db.collection('users').doc(cred.user.uid).set({
+      bio: signupForm['signup-bio'].value,
+      email: email
+    });
+  }).then(() => {
+    // close the signup modal & reset form
+    const modal = document.querySelector('#modal-signup');
+    M.Modal.getInstance(modal).close();
+    signupForm.reset();
+    signupForm.querySelector('.error').innerHTML = '';
+    var text = '<span>STATUS: Successful. Login as Admin to register another.</span>';
+    M.toast({
+      html: text
+    });
+    sigup_btn.innerHTML = "Submit";
+    //logout immediately a registering a user
+    auth.signOut();
+    home_out();
+  }).catch(err => {
+    signupForm.querySelector('.error').innerHTML = err.message;
+    sigup_btn.innerHTML = "Submit";
+  });
+
 });
 
 // logout
@@ -92,12 +135,16 @@ logout2.addEventListener('click', (e) => {
   });
 });
 
+
+
+
+
 // login
 const loginForm = document.querySelector('#login-form');
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  login_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-blue-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
+  login_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
 
   // get user info
   const email = loginForm['login-email'].value;
@@ -105,6 +152,33 @@ loginForm.addEventListener('submit', (e) => {
 
   // log the user in
   auth.signInWithEmailAndPassword(email, password).then((cred) => {
+
+
+
+
+
+    db.collection("users").where("email", "==", email)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.data().bio);
+          if(doc.data().bio.includes("Command Center") === true){
+            alert(doc.data().bio);
+            // localStorage.setItem("worker", doc.data().bio);
+          }
+        });
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+
+
+
+
+
+
+
     // close the signup modal & reset form
     const modal = document.querySelector('#modal-login');
     M.Modal.getInstance(modal).close();
