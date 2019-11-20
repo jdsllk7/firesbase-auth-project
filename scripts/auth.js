@@ -5,10 +5,13 @@ adminForm.addEventListener('submit', (e) => {
 
   const adminEmail = document.querySelector('#admin-email').value;
   const addAdminRole = functions.httpsCallable('addAdminRole');
-  addAdminRole({ email: adminEmail }).then(result => {
+  addAdminRole({
+    email: adminEmail
+  }).then(result => {
     console.log(result);
   });
 });
+
 
 // listen for auth status changes
 auth.onAuthStateChanged(user => {
@@ -47,7 +50,7 @@ createForm.addEventListener('submit', (e) => {
 const signupForm = document.querySelector('#signup-form');
 signupForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  
+
   // get user info
   const email = signupForm['signup-email'].value;
   const password = signupForm['signup-password'].value;
@@ -62,7 +65,7 @@ signupForm.addEventListener('submit', (e) => {
     const modal = document.querySelector('#modal-signup');
     M.Modal.getInstance(modal).close();
     signupForm.reset();
-    signupForm.querySelector('.error').innerHTML = ''
+    signupForm.querySelector('.error').innerHTML = '';
   }).catch(err => {
     signupForm.querySelector('.error').innerHTML = err.message;
   });
@@ -73,13 +76,17 @@ const logout = document.querySelector('#logout');
 logout.addEventListener('click', (e) => {
   e.preventDefault();
   auth.signOut();
+  home_out();
+  console.log("You've logged out!")
 });
 
 // login
 const loginForm = document.querySelector('#login-form');
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  
+
+  login_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-blue-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
+
   // get user info
   const email = loginForm['login-email'].value;
   const password = loginForm['login-password'].value;
@@ -91,8 +98,11 @@ loginForm.addEventListener('submit', (e) => {
     M.Modal.getInstance(modal).close();
     loginForm.reset();
     loginForm.querySelector('.error').innerHTML = '';
+    login_btn.innerHTML = "Login";
+    home();
   }).catch(err => {
     loginForm.querySelector('.error').innerHTML = err.message;
+    login_btn.innerHTML = "Login";
   });
 
 });

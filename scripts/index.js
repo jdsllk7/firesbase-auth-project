@@ -4,9 +4,61 @@ const loggedOutLinks = document.querySelectorAll('.logged-out');
 const loggedInLinks = document.querySelectorAll('.logged-in');
 const accountDetails = document.querySelector('.account-details');
 const adminItems = document.querySelectorAll('.admin');
+const home_cards = document.getElementById("home_cards");
+const records = document.getElementById("records");
+const patient_form_id = document.getElementById("patient_form_id");
+const logged_out_card = document.getElementById("logged_out_card");
+const login_btn = document.getElementById("login_btn");
+
+
+function reviewed_records() {
+  localStorage.setItem("state", "reviewed_records");
+  home_cards.style.display = "none";
+  records.style.display = "block";
+  patient_form_id.style.display = "none";
+  logged_out_card.style.display = "none";
+}
+
+function send_records() {
+  localStorage.setItem("state", "send_records");
+  home_cards.style.display = "none";
+  patient_form_id.style.display = "block";
+  records.style.display = "none";
+  logged_out_card.style.display = "none";
+}
+
+function home() {
+  localStorage.setItem("state", "home");
+  home_cards.style.display = "block";
+  patient_form_id.style.display = "none";
+  records.style.display = "none";
+  logged_out_card.style.display = "none";
+}
+
+function home_out() {
+  localStorage.setItem("state", "home_out");
+  home_cards.style.display = "none";
+  patient_form_id.style.display = "none";
+  records.style.display = "none";
+  logged_out_card.style.display = "block";
+}
 
 const setupUI = (user) => {
   if (user) {
+    var state = localStorage.getItem("state");
+
+    if (state == "reviewed_records") {
+      reviewed_records();
+
+    } else if (state == "send_records") {
+      send_records();
+
+    } else if (state == "home_out") {
+      home_out();
+
+    } else {
+      home();
+    }
     if (user.admin) {
       adminItems.forEach(item => item.style.display = 'block');
     }
@@ -23,6 +75,7 @@ const setupUI = (user) => {
     loggedInLinks.forEach(item => item.style.display = 'block');
     loggedOutLinks.forEach(item => item.style.display = 'none');
   } else {
+    
     // clear account info
     accountDetails.innerHTML = '';
     // toggle user elements
@@ -47,21 +100,9 @@ const setupGuides = (data) => {
       `;
       html += li;
     });
-    guideList.innerHTML = html
+    guideList.innerHTML = html;
   } else {
     guideList.innerHTML = '<h5 class="center-align">Login to view guides</h5>';
   }
-  
 
 };
-
-// setup materialize components
-document.addEventListener('DOMContentLoaded', function() {
-
-  var modals = document.querySelectorAll('.modal');
-  M.Modal.init(modals);
-
-  var items = document.querySelectorAll('.collapsible');
-  M.Collapsible.init(items);
-
-});

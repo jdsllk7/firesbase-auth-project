@@ -1,47 +1,128 @@
 <html lang="en">
 
 <head>
+  <title>TeleHealth</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Compiled and minified CSS -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <title>Email | Auth</title> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link href="css/style.css" rel="stylesheet" />
 </head>
 
-<body class="grey lighten-3">
+<body class="grey darken-3">
 
-  <!-- NAVBAR -->
-  <nav class="z-depth-0 grey lighten-4">
-    <div class="nav-wrapper container">
-      <a href="#" class="brand-logo">
-        <img src="img/logo.svg" style="width: 180px; margin-top: 10px;">
-      </a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li class="logged-in" style="display: none;">
-          <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
-        </li>
-        <li class="logged-in" style="display: none;">
-          <a href="#" class="grey-text" id="logout">Logout</a>
-        </li>
-        <li class="admin" style="display: none;">
-          <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Guide</a>
-        </li>
-        <li class="logged-out" style="display: none;">
-          <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
-        </li>
-        <li class="logged-out" style="display: none;">
-          <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
-        </li>
-        </span>
-      </ul>
-    </div>
-  </nav>
+  <!-- top nav -->
+  <div class="navbar-fixed">
+    <nav class="green darken-3" style="z-index: 999;">
+      <div class="nav-wrapper z-depth-0">
+        <a href="#!" class="brand-logo">Tele [Health]</a>
+        <a href="#" data-target="slide-out" class="sidenav-trigger">
+          <i class="material-icons">menu</i>
+        </a>
+        <a href="#" onclick="home()" class="sidenav-trigger right logged-in" style="display: none;">
+          <i class="material-icons">home</i></a>
+
+        <a href="#" class="white-text hide-on-large-only sidenav-trigger modal-trigger right logged-out"
+          style="display: none;" data-target="modal-login"><b>Login</b></a>
+        <ul class="right hide-on-med-and-down">
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
+          </li>
+          <li class="adminzzz" style="display: none;">
+            <a href="#" class="white-text modal-trigger" data-target="modal-create">Create Guide</a>
+          </li>
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="white-text" id="">Send Tests</a>
+          </li>
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="white-text" id="">Reviewed Records</a>
+          </li>
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="white-text" id="logoutzzz">Logout</a>
+          </li>
+          <li class="logged-out" style="display: none;">
+            <a href="#" class="white-text modal-trigger" data-target="modal-login">Login</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <ul id="slide-out" class="sidenav sidenav grey darken-3">
+    <li>
+      <div class="user-view">
+        <div class="background">
+          <img src="img/stones.jpg">
+        </div>
+        <a href="#user"><img class="circle" src="img/profile.jpg"></a>
+        <br>
+        <!-- <a href="#name"><span class="white-text name">John Doe</span></a> -->
+        <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+      </div>
+    </li>
+    <li><a href="#!" onclick="home()" class="sidenav-close white-text">
+        <i class="material-icons white-text">home</i>Home</a>
+    </li>
+    <li class="logged-in" style="display: none;">
+      <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
+    </li>
+    <li class="logged-out" style="display: none;">
+      <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-login">Login</a>
+    </li>
+    <li class="adminzzz" style="display: none;">
+      <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-create">Create
+        Guide</a>
+    </li>
+    <li class="logged-in" style="display: none;">
+      <a href="#" class="white-text sidenav-close" id="logout">Logout</a>
+    </li>
+    <li>
+      <div class="logged-in" class="divider"></div>
+    </li>
+    <li><a class="logged-in subheader white-text"><i class="material-icons white-text">print</i> PAGES</a></li>
+    <li class="logged-in" style="display: none;">
+      <a onclick="reviewed_records()" href="#" class="waves-effect white-text sidenav-close" id="">Reviewed Records</a>
+    </li>
+    <li class="logged-in" style="display: none;">
+      <a onclick="send_records()" href="#" class="waves-effect white-text sidenav-close" id="">Send Tests
+        Records</a>
+    </li>
+  </ul>
+
+  <!-- <ul class="sidenav grey darken-3" id="mobile-demo">
+    <li class="logged-in" style="display: none;">
+      <a href="#home" onclick="home()" class="sidenav-close white-text">Home</a>
+    </li>
+    <li class="logged-in" style="display: none;">
+      <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
+    </li>
+    <hr style="width:90%">
+    <li class="adminzzz" style="display: none;">
+      <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-create">Create
+        Guide</a>
+    </li>
+    <li class="logged-out" style="display: none;">
+      <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-login">Login</a>
+    </li>
+    <li class="logged-in" style="display: none;">
+      <a onclick="send_records()" href="#" class="white-text sidenav-close" id="">Send Tests Records</a>
+    </li>
+    <li class="logged-in" style="display: none;">
+      <a onclick="reviewed_records()" href="#" class="white-text sidenav-close" id="">Reviewed Records</a>
+    </li>
+    <li class="logged-in" style="display: none;">
+      <a href="#" class="white-text sidenav-close" id="logout">Logout</a>
+    </li>
+  </ul> -->
+
 
   <!-- ADMIN ACTIONS -->
-  <form class="center-align admin-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
+  <form class="center-align admin-actions adminzzz" style="margin: 40px auto; max-width: 300px; display: none;">
     <input type="email" placeholder="User email" id="admin-email" required />
-    <button class="btn-small yellow darken-2 z-depth-0">Make admin</button>
+    <button class="btn-small green darken-3 z-depth-0">Make admin</button>
   </form>
 
   <!-- SIGN UP MODAL -->
@@ -61,7 +142,7 @@
           <input type="text" id="signup-bio" required />
           <label for="signup-bio">One Line Bio</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+        <button class="btn green darken-3 z-depth-0">Sign up</button>
         <p class="error pink-text center-align"></p>
       </form>
     </div>
@@ -80,7 +161,7 @@
           <input type="password" id="login-password" required />
           <label for="login-password">Your password</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Login</button>
+        <button class="btn green darken-3 z-depth-0" style="" id="login_btn">Login</button>
         <p class="error pink-text center-align"></p>
       </form>
     </div>
@@ -107,17 +188,212 @@
           <textarea id="content" class="materialize-textarea" required></textarea>
           <label for="content">Guide Content</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Create</button>
+        <button class="btn green darken-3 z-depth-0">Create</button>
       </form>
     </div>
   </div>
 
-  <!-- GUIDE LIST -->
-  <div class="container" style="margin-top: 40px;">
-    <ul class="collapsible z-depth-0 guides" style="border: none;">
 
+
+
+
+
+
+
+  <!---------------------------------------- LOGGED OUT ------------------------------------------->
+  <div class="container center logged-out" id="logged_out_card" style="margin-top: 100px; display: none;">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card blue-grey lighten-5 z-depth-0">
+          <div class="card-content white-text">
+            <span class="card-title blue-grey-text">Welcome to Tele [Health]</span>
+            <p class="blue-grey-text">A Quick & Efficient Medical Response System
+              <hr style="width:90%;">
+            </p>
+            <p class="blue-grey-text">You are currently logged out.<br>Please login to make use of the system.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!---------------------------------------- CARDS ------------------------------------------->
+  <div class="container center" id="home_cards" style="margin-top: 40px; display: none;">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card blue-grey lighten-5">
+          <div class="card-content white-text">
+            <span class="card-title blue-grey-text">Reviewed Records</span>
+            <p class="blue-grey-text">Open to view all reviewed patient records,
+              and administer medicator as instructed by the doctor.</p>
+          </div>
+          <div class="card-action">
+            <a onclick="reviewed_records()" href="#">Open</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card blue-grey lighten-5">
+          <div class="card-content white-text">
+            <span class="card-title blue-grey-text">Send Medical Tests</span>
+            <p class="blue-grey-text">Submit medical test records to nearby Doctors to have them reviewed.</p>
+          </div>
+          <div class="card-action">
+            <a onclick="send_records()" href="#">Open</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- GUIDE LIST -->
+  <div class="container" id="records" style="margin-top: 40px; display: none;">
+    <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
+            offset-s1 white-text">Reviewed Patient Records
+      <i class="material-icons">clear_all</i></h5>
+    <ul class="collapsible z-depth-0 guides" style="border: none;">
+      <!-- output rendered in index.js  -->
     </ul>
   </div>
+
+
+
+
+
+
+  <!---------------------------------------- FORM ------------------------------------------->
+  <form class="container row white-text" id="patient_form_id" style="display: none;">
+
+    <div>
+
+      <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
+          offset-s1">Enter Patient's
+        info
+        <i class="material-icons">info_outline</i></h5>
+
+      <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
+        <input id="patient_name" type="text" class="validate" name="patient_name" required>
+        <label for="patient_name" class="white-text">Full Name</label>
+      </div>
+
+      <div style="margin-bottom:20px;" class="input-field col s5 offset-s1">
+        <input id="patient_age" type="number" class="validate" name="patient_age" required>
+        <label for="patient_age" class="white-text">Age</label>
+      </div>
+      <div class="input-field col s5">
+        <select name="ageType" id="ageType">
+          <option value="years" selected>Years</option>
+          <option value="months">Months</option>
+          <option value="weeks">Weeks</option>
+        </select>
+        <label class="white-text">Select Age Type</label>
+      </div>
+
+
+      <div style="margin-bottom:20px;" class="col s10 offset-s1">
+        <p class="col s10"><b>SEX</b></p>
+        <p>
+          <label class="white-text" for="male">
+            <input class="with-gap white" id="male" name="sex" value="Male" type="radio" checked />
+            <span>Male</span>
+          </label>
+        </p>
+        <p>
+          <label class="white-text" for="female">
+            <input class="with-gap white" id="female" name="sex" value="Female" type="radio" />
+            <span>Female</span>
+          </label>
+        </p>
+      </div>
+
+    </div>
+
+    <h5 class="col s10 offset-s1" style="margin-bottom:20px;margin-top:30px;">Enter Medical
+      Tests <i class="material-icons">local_hospital</i><br></h5>
+
+
+    <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
+      <input id="patient_temp" type="number" class="validate" name="patient_temp">
+      <label for="patient_temp" class="white-text">Temperature (℃)</label>
+    </div>
+
+
+    <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
+      <input id="patient_bp" type="number" class="validate" name="patient_bp">
+      <label for="patient_bp" class="white-text">Blood Pressure (mmHg)</label>
+    </div>
+
+
+    <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
+      <input id="patient_weight" type="number" class="validate" name="patient_weight">
+      <label for="patient_weight" class="white-text">Weight (kg)</label>
+    </div>
+
+
+    <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
+      <textarea name="extraInfo" id="textarea1" class="materialize-textarea" maxlength="200"
+        data-length="200"></textarea>
+      <label for="textarea1" class="white-text">Extra info (Optional)</label>
+    </div>
+
+
+    <h5 class="col s10 offset-s1" style="margin-bottom:30px;margin-top:30px;">Enter Response
+      info <i class="material-icons">my_location</i><br></h5>
+
+
+    <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
+      <select name="priority" id="priority">
+        <option value="" selected>-Select-</option>
+        <option value="critical">Critical</option>
+      </select>
+      <label class="white-text">Response Priority</label>
+    </div>
+
+
+    <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
+      <select name="town" id="town">
+        <option value="" selected>-Select-</option>
+        <option value="Kitwe">Kitwe</option>
+        <option value="Ndola">Ndola</option>
+        <option value="Mufulira">Mufulira</option>
+        <option value="Luanshya">Luanshya</option>
+        <option value="Chingola">Chingola</option>
+        <option value="Chililabombwe">Chililabombwe</option>
+      </select>
+      <label class="white-text">Town</label>
+    </div>
+
+
+    <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
+      <select name="location" id="location" onchange="getLocation()">
+        <option value="" selected>-Select-</option>
+        <option value="Health Center">Health Center</option>
+        <option value="Remote Location">Remote Location</option>
+      </select>
+      <label class="white-text">Patient's Location</label>
+    </div>
+
+
+    <div style="margin-bottom:50px;" class="input-field col s6 offset-s3
+        center">
+      <button class="btn waves-effect waves-light green darken-3" type="submit" name="patient_submit">submit<i class="material-icons
+            right">open_in_new</i>
+      </button>
+    </div>
+
+  </form>
+
+
+
+
+
+
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
@@ -148,15 +424,19 @@
     const functions = firebase.functions();
 
     // update firestore settings
-    db.settings({
-      timestampsInSnapshots: true
-    });
+    // db.settings({
+    //   timestampsInSnapshots: true
+    // });
   </script>
 
   <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <script src="scripts/init.js"></script>
   <script src="scripts/index.js"></script>
   <script src="scripts/auth.js"></script>
+  <script src="scripts/pin_location.js"></script>
+
+
 </body>
 
 </html>
