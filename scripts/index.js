@@ -73,7 +73,7 @@ function none() {
   admin_card.style.display = "none";
 }
 
-function doctor(){
+function doctor(){ 
   doc_view.forEach(item => item.style.display = 'block');
   agent_view.forEach(item => item.style.display = 'none');
 }
