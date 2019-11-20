@@ -17,16 +17,16 @@
   <!-- top nav -->
   <div class="navbar-fixed">
     <nav class="green darken-3" style="z-index: 999;">
-      <div class="nav-wrapper z-depth-1">
-        <a href="#!" class="brand-logo">Agent</a>
+      <div class="nav-wrapper z-depth-0">
+        <a href="#!" class="brand-logo">Tele [Health]</a>
         <a href="#" data-target="slide-out" class="sidenav-trigger">
           <i class="material-icons">menu</i>
         </a>
-        <a href="#" onclick="home()" class="sidenav-trigger right logged-in" style="display: none;"><i
-            class="material-icons">home</i></a>
+        <a href="#" onclick="home()" class="sidenav-trigger right logged-in" style="display: none;">
+          <i class="material-icons">home</i></a>
 
-        <a href="#" class="white-text sidenav-trigger modal-trigger right logged-out" style="display: none;"
-          data-target="modal-login"><b>Login</b></a>
+        <a href="#" class="white-text hide-on-large-only sidenav-trigger modal-trigger right logged-out"
+          style="display: none;" data-target="modal-login"><b>Login</b></a>
         <ul class="right hide-on-med-and-down">
           <li class="logged-in" style="display: none;">
             <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
@@ -84,11 +84,11 @@
     </li>
     <li><a class="logged-in subheader white-text"><i class="material-icons white-text">print</i> PAGES</a></li>
     <li class="logged-in" style="display: none;">
-      <a onclick="send_records()" href="#" class="waves-effect white-text sidenav-close" id="">Send Tests
-        Records</a>
+      <a onclick="reviewed_records()" href="#" class="waves-effect white-text sidenav-close" id="">Reviewed Records</a>
     </li>
     <li class="logged-in" style="display: none;">
-      <a onclick="reviewed_records()" href="#" class="waves-effect white-text sidenav-close" id="">Reviewed Records</a>
+      <a onclick="send_records()" href="#" class="waves-effect white-text sidenav-close" id="">Send Tests
+        Records</a>
     </li>
   </ul>
 
@@ -122,7 +122,7 @@
   <!-- ADMIN ACTIONS -->
   <form class="center-align admin-actions adminzzz" style="margin: 40px auto; max-width: 300px; display: none;">
     <input type="email" placeholder="User email" id="admin-email" required />
-    <button class="btn-small yellow darken-2 z-depth-0">Make admin</button>
+    <button class="btn-small green darken-3 z-depth-0">Make admin</button>
   </form>
 
   <!-- SIGN UP MODAL -->
@@ -142,7 +142,7 @@
           <input type="text" id="signup-bio" required />
           <label for="signup-bio">One Line Bio</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+        <button class="btn green darken-3 z-depth-0">Sign up</button>
         <p class="error pink-text center-align"></p>
       </form>
     </div>
@@ -161,7 +161,7 @@
           <input type="password" id="login-password" required />
           <label for="login-password">Your password</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Login</button>
+        <button class="btn green darken-3 z-depth-0" style="" id="login_btn">Login</button>
         <p class="error pink-text center-align"></p>
       </form>
     </div>
@@ -188,7 +188,7 @@
           <textarea id="content" class="materialize-textarea" required></textarea>
           <label for="content">Guide Content</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Create</button>
+        <button class="btn green darken-3 z-depth-0">Create</button>
       </form>
     </div>
   </div>
@@ -201,13 +201,16 @@
 
 
   <!---------------------------------------- LOGGED OUT ------------------------------------------->
-  <div class="container center logged-out" style="margin-top: 40px; display: none;">
+  <div class="container center logged-out" id="logged_out_card" style="margin-top: 100px; display: none;">
     <div class="row">
-      <div class="col s12 m6 l12">
-        <div class="card blue-grey lighten-5">
+      <div class="col s12 m12 l12">
+        <div class="card blue-grey lighten-5 z-depth-0">
           <div class="card-content white-text">
-            <span class="card-title blue-grey-text">Logged Out</span>
-            <p class="blue-grey-text">You are currently logged out.<b>Please login to make use of the system.</p>
+            <span class="card-title blue-grey-text">Welcome to Tele [Health]</span>
+            <p class="blue-grey-text">A Quick & Efficient Medical Response System
+              <hr style="width:90%;">
+            </p>
+            <p class="blue-grey-text">You are currently logged out.<br>Please login to make use of the system.</p>
           </div>
         </div>
       </div>
@@ -219,7 +222,7 @@
   <!---------------------------------------- CARDS ------------------------------------------->
   <div class="container center" id="home_cards" style="margin-top: 40px; display: none;">
     <div class="row">
-      <div class="col s12 m6 l12">
+      <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5">
           <div class="card-content white-text">
             <span class="card-title blue-grey-text">Reviewed Records</span>
@@ -233,7 +236,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s12 m6 l12">
+      <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5">
           <div class="card-content white-text">
             <span class="card-title blue-grey-text">Send Medical Tests</span>
