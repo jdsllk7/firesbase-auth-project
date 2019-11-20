@@ -107,6 +107,7 @@ signupForm.addEventListener('submit', (e) => {
     //logout immediately a registering a user
     auth.signOut();
     home_out();
+    localStorage.setItem("user", "out");
   }).catch(err => {
     signupForm.querySelector('.error').innerHTML = err.message;
     sigup_btn.innerHTML = "Submit";
@@ -120,7 +121,11 @@ logout.addEventListener('click', (e) => {
   e.preventDefault();
   auth.signOut();
   home_out();
-  console.log("You've logged out!")
+  localStorage.setItem("user", "out");
+  var text = '<span>STATUS: Thank you, Goodbye...</span>';
+  M.toast({
+    html: text
+  });
 });
 // logout2
 const logout2 = document.querySelector('#logout2');
@@ -128,7 +133,7 @@ logout2.addEventListener('click', (e) => {
   e.preventDefault();
   auth.signOut();
   home_out();
-  console.log("You've logged out!");
+  localStorage.setItem("user", "out");
   var text = '<span>STATUS: Thank you, Goodbye...</span>';
   M.toast({
     html: text
@@ -163,9 +168,10 @@ loginForm.addEventListener('submit', (e) => {
         querySnapshot.forEach(function (doc) {
           // doc.data() is never undefined for query doc snapshots
           console.log(doc.data().bio);
-          if(doc.data().bio.includes("Command Center") === true){
-            alert(doc.data().bio);
-            // localStorage.setItem("worker", doc.data().bio);
+          if (doc.data().bio.includes("Doctor") === true) {
+            localStorage.setItem("user", doc.data().bio);
+          } else if (doc.data().bio.includes("Health Agent") === true) {
+            localStorage.setItem("user", doc.data().bio);
           }
         });
       })

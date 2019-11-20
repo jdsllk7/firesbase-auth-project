@@ -35,7 +35,7 @@
         </a>
 
         <ul class="right hide-on-med-and-down">
-          <li class="logged-in" style="display: none;" id="home_link">
+          <li class="logged-in agent_view doc_view" style="display: none;" id="home_link">
             <a onclick="home()" href="#" class="waves-effect white-text sidenav-close">
               <i class="material-icons white-text">home</i>
             </a>
@@ -46,11 +46,19 @@
           <li class="adminzzz" style="display: none;">
             <a href="#" class="white-text modal-trigger" data-target="modal-create">Create Guide</a>
           </li>
-          <li class="logged-in" style="display: none;" id="review_links2">
+          <li class="logged-in doc_view" style="display: none;" id="review_links22">
+            <a onclick="alert('doc')" href="#" class="waves-effect white-text sidenav-close" id="">Med Response
+            </a>
+          </li>
+          <li class="logged-in doc_view" style="display: none;" id="review_links22">
+            <a onclick="alert('doc')" href="#" class="waves-effect white-text sidenav-close" id="">Med History
+            </a>
+          </li>
+          <li class="logged-in agent_view" style="display: none;" id="review_links22">
             <a onclick="reviewed_records()" href="#" class="waves-effect white-text sidenav-close" id="">Reviewed
               Records</a>
           </li>
-          <li class="logged-in" style="display: none;" id="send_links2">
+          <li class="logged-in agent_view" style="display: none;" id="send_links22">
             <a onclick="send_records()" href="#" class="waves-effect white-text sidenav-close" id="">Send Tests</a>
           </li>
           <li class="logged-in" style="display: none;">
@@ -73,15 +81,14 @@
     <li>
       <div class="user-view">
         <div class="background">
-          <img src="img/stones.jpg">
+          <img src="img/stones.jpg" style="width: 100%;height: 100%;">
         </div>
         <a href="#user"><img class="circle" src="img/profile.jpg"></a>
         <br>
-        <!-- <a href="#name"><span class="white-text name">John Doe</span></a> -->
         <a href="#email"><span class="white-text email" id="email_profile"></span></a>
       </div>
     </li>
-    <li><a href="#!" onclick="home()" class="sidenav-close white-text">
+    <li><a href="#!" onclick="home()" class="sidenav-close white-text agent_view doc_view">
         <i class="material-icons white-text">home</i>Home</a>
     </li>
     <li class="logged-in" style="display: none;">
@@ -103,12 +110,19 @@
     <li>
       <div class="logged-in" class="divider"></div>
     </li>
-    <li><a class="logged-in subheader white-text"><i class="material-icons white-text">print</i> PAGES</a></li>
-    <li class="logged-in" style="display: none;" id="review_links1">
+    <li><a class="logged-in subheader white-text agent_view"><i class="material-icons white-text">print</i> PAGES</a>
+    </li>
+    <li class="logged-in agent_view" style="display: none;" id="review_links11">
       <a onclick="reviewed_records()" href="#" class="waves-effect white-text sidenav-close" id="">Reviewed Records</a>
     </li>
-    <li class="logged-in" style="display: none;" id="send_links1">
+    <li class="logged-in agent_view" style="display: none;" id="send_links11">
       <a onclick="send_records()" href="#" class="waves-effect white-text sidenav-close" id="">Send Tests</a>
+    </li>
+    <li class="logged-in doc_view" style="display: none;" id="review_links11">
+      <a onclick="alert('doc')" href="#" class="waves-effect white-text sidenav-close" id="">Med Response</a>
+    </li>
+    <li class="logged-in doc_view" style="display: none;" id="send_links11">
+      <a onclick="alert('doc')" href="#" class="waves-effect white-text sidenav-close" id="">Med History</a>
     </li>
   </ul>
 

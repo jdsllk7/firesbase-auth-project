@@ -3,7 +3,8 @@ const guideList = document.querySelector('.guides');
 const loggedOutLinks = document.querySelectorAll('.logged-out');
 const loggedInLinks = document.querySelectorAll('.logged-in');
 const accountDetails = document.querySelector('.account-details');
-const send_review_links = document.querySelector('.send_review_links');
+const doc_view = document.querySelectorAll('.doc_view');
+const agent_view = document.querySelectorAll('.agent_view');
 const adminItems = document.querySelectorAll('.admin');
 const home_cards = document.getElementById("home_cards");
 const records = document.getElementById("records");
@@ -12,10 +13,6 @@ const logged_out_card = document.getElementById("logged_out_card");
 const login_btn = document.getElementById("login_btn");
 const records_submit_btn = document.getElementById("records_submit_btn");
 const admin_card = document.getElementById("admin_card");
-const review_links1 = document.getElementById("review_links1");
-const review_links2 = document.getElementById("review_links2");
-const send_links1 = document.getElementById("send_links1");
-const send_links2 = document.getElementById("send_links2");
 const email_profile = document.getElementById("email_profile");
 
 
@@ -64,10 +61,6 @@ function admin() {
   records.style.display = "none";
   logged_out_card.style.display = "none";
   admin_card.style.display = "block";
-  review_links1.style.display = "none";
-  review_links2.style.display = "none";
-  send_links1.style.display = "none";
-  send_links2.style.display = "none";
   home_link.style.display = "none";
 }
 
@@ -79,32 +72,50 @@ function none() {
   logged_out_card.style.display = "none";
   admin_card.style.display = "none";
 }
+
+function doctor(){
+  doc_view.forEach(item => item.style.display = 'block');
+  agent_view.forEach(item => item.style.display = 'none');
+}
+
+
 const setupUI = (user) => {
   if (user) {
 
-    var state = localStorage.getItem("state");
+    // toggle user UI elements
+    loggedInLinks.forEach(item => item.style.display = 'block');
+    loggedOutLinks.forEach(item => item.style.display = 'none');
 
+    var state = localStorage.getItem("state");
+    alert(state);
     if (state == "reviewed_records") {
-      // alert(state);
       reviewed_records();
 
     } else if (state == "home") {
-      // alert(state);
       home();
 
     } else if (state == "send_records") {
-      // alert(state);
       send_records();
 
     } else {
-      // alert(state);
       none();
     }
+
+    
+    var user_type = localStorage.getItem("user");
+    if(user_type ==="Doctor"){
+      alert(user_type);
+      doctor();
+    }
+
+
+
+
+
+
     if (user.admin) {
       adminItems.forEach(item => item.style.display = 'block');
       admin();
-    } else {
-
     }
     // account info
     db.collection('users').doc(user.uid).get().then(doc => {
@@ -116,9 +127,7 @@ const setupUI = (user) => {
       `;
       accountDetails.innerHTML = html;
     });
-    // toggle user UI elements
-    loggedInLinks.forEach(item => item.style.display = 'block');
-    loggedOutLinks.forEach(item => item.style.display = 'none');
+
     if (state == "admin") {
       admin();
     }
