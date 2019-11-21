@@ -18,6 +18,8 @@ const login_btn = document.getElementById("login_btn");
 const records_submit_btn = document.getElementById("records_submit_btn");
 const email_profile = document.getElementById("email_profile");
 
+var user_id;
+var user_email;
 
 
 //ADMIN UI
@@ -183,10 +185,13 @@ const setupUI = (user) => {
 
     // Print out account info on model
     db.collection('users').doc(user.uid).get().then(doc => {
-      email_profile.innerHTML = user.email;
+      user_id = user.uid;
+      user_email = doc.data().email;
+      email_profile.innerHTML = "Title: " + doc.data().bio + "<br>Location: " + doc.data().town + "<br>Email:" + doc.data().email;
       const html = `
-      Logged in as <span id="user_id" data-id="${user.uid}">${user.email}</span>
-        <div>${doc.data().bio}</div>
+      Email: <span data-id="${user.uid}">${user.email}</span>
+        <div>Title: ${doc.data().bio}</div>
+        <div>Location: ${doc.data().town}</div>
         <div class="pink-text">${user.admin ? 'Admin' : ''}</div>
       `;
       accountDetails.innerHTML = html;
@@ -242,5 +247,4 @@ const setupGuides = (data) => {
   }
 
 };
-
-// const user_id = document.getElementById("user_id");
+console.log(user_id);

@@ -21,7 +21,8 @@
   <div class="navbar-fixed">
     <nav class="green darken-3" style="z-index: 999;">
       <div class="nav-wrapper z-depth-0">
-        <a href="#!" onclick='home(localStorage.getItem("state"))' class="brand-logo" style="font-size: 1.6em;">Tele [Health]</a>
+        <a href="#!" onclick='home(localStorage.getItem("state"))' class="brand-logo" style="font-size: 1.6em;">Tele
+          [Health]</a>
         <a href="#" data-target="slide-out" class="sidenav-trigger">
           <i class="material-icons">menu</i>
         </a>
@@ -133,21 +134,39 @@
     <div class="modal-content">
       <h4>Register Account</h4><br />
       <form id="signup-form">
+
         <div class="input-field">
           <input type="email" id="signup-email" required />
           <label for="signup-email">Email address</label>
         </div>
+
         <div class="input-field">
           <input type="password" id="signup-password" required />
           <label for="signup-password">Enter Medical ID</label>
         </div>
+
         <div class="input-field">
           <select id="signup-bio" required>
-            <option value="Health Agent" selected>Health Agent</option>
+            <option value="" selected>-Select-</option>
+            <option value="Health Agent">Health Agent</option>
             <option value="Doctor">Doctor</option>
           </select>
           <label class="white-text">Account Type</label>
         </div>
+
+        <div class="input-field">
+          <select id="town" required>
+            <option value="" selected>-Select-</option>
+            <option value="Kitwe">Kitwe</option>
+            <option value="Ndola">Ndola</option>
+            <option value="Mufulira">Mufulira</option>
+            <option value="Luanshya">Luanshya</option>
+            <option value="Chingola">Chingola</option>
+            <option value="Chililabombwe">Chililabombwe</option>
+          </select>
+          <label class="white-text">Town</label>
+        </div>
+
         <button class="btn green darken-3 z-depth-0" id="sigup_btn">Submit</button>
         <p class="error pink-text center-align"></p>
       </form>
@@ -176,31 +195,12 @@
   <!-- ACCOUNT MODAL -->
   <div id="modal-account" class="modal">
     <div class="modal-content center-align">
-      <h4>Account details</h4><br />
+      <h5>Account details</h5><br/>
       <div class="account_details"></div>
+      <br>
+      <button onclick="M.Modal.getInstance(modal).close();" class="btn center green darken-3 z-depth-0">Okay</button>
     </div>
   </div>
-
-  <!-- CREATE GUIDE MODAL -->
-  <!-- <div id="modal-create" class="modal">
-    <div class="modal-content">
-      <h4>Create Guide</h4><br />
-      <form id="create-form">
-        <div class="input-field">
-          <input type="text" id="title" required>
-          <label for="title">Guide Title</label>
-        </div>
-        <div class="input-field">
-          <textarea id="content" class="materialize-textarea" required></textarea>
-          <label for="content">Guide Content</label>
-        </div>
-        <button class="btn green darken-3 z-depth-0">Create</button>
-      </form>
-    </div>
-  </div> -->
-
-
-
 
 
 
@@ -209,33 +209,33 @@
 
   <!---------------------------------------- DOC_CARDS ------------------------------------------->
   <div class="container center doc_home_card hide_ui" style="margin-top: 40px; display: none;">
-      <div class="row">
-        <div class="col s12 m12 l12">
-          <div class="card blue-grey lighten-5">
-            <div class="card-content white-text">
-              <span class="card-title blue-grey-text">Review Current Cases</span>
-              <p class="blue-grey-text">Open to view all patient records sent by health agents.</p>
-            </div>
-            <div class="card-action">
-              <a class="green-text" onclick="doc_med_response()" href="#">Open</a>
-            </div>
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card blue-grey lighten-5">
+          <div class="card-content white-text">
+            <span class="card-title blue-grey-text">Review Current Cases</span>
+            <p class="blue-grey-text">Open to view all patient records sent by health agents.</p>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col s12 m12 l12">
-          <div class="card blue-grey lighten-5">
-            <div class="card-content white-text">
-              <span class="card-title blue-grey-text">View Medical Achieves</span>
-              <p class="blue-grey-text">Submit medical test records to nearby Doctors to have them reviewed.</p>
-            </div>
-            <div class="card-action">
-              <a class="green-text" onclick="doc_med_history()" href="#">Open</a>
-            </div>
+          <div class="card-action">
+            <a class="green-text" onclick="doc_med_response()" href="#">Open</a>
           </div>
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card blue-grey lighten-5">
+          <div class="card-content white-text">
+            <span class="card-title blue-grey-text">View Medical Achieves</span>
+            <p class="blue-grey-text">Submit medical test records to nearby Doctors to have them reviewed.</p>
+          </div>
+          <div class="card-action">
+            <a class="green-text" onclick="doc_med_history()" href="#">Open</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -373,12 +373,12 @@
         <i class="material-icons">info_outline</i></h5>
 
       <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-        <input id="patient_name" type="text" class="validate" name="patient_name" required>
+        <input id="patient_name" type="text" class="validate" name="patient_name" value="Joshua Lungu" required>
         <label for="patient_name" class="white-text">Full Name</label>
       </div>
 
       <div style="margin-bottom:20px;" class="input-field col s5 offset-s1">
-        <input id="patient_age" type="number" class="validate" name="patient_age" required>
+        <input id="patient_age" type="number" class="validate" value="34" name="patient_age" required>
         <label for="patient_age" class="white-text">Age</label>
       </div>
       <div class="input-field col s5">
@@ -414,26 +414,26 @@
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-      <input id="patient_temp" type="number" class="validate" name="patient_temp">
+      <input id="patient_temp" type="text" value="34" class="validate" name="patient_temp">
       <label for="patient_temp" class="white-text">Temperature (℃)</label>
     </div>
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-      <input id="patient_bp" type="number" class="validate" name="patient_bp">
+      <input id="patient_bp" type="text" value="112/178" class="validate" name="patient_bp">
       <label for="patient_bp" class="white-text">Blood Pressure (mmHg)</label>
     </div>
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-      <input id="patient_weight" type="number" class="validate" name="patient_weight">
+      <input id="patient_weight" type="text" value="68" class="validate" name="patient_weight">
       <label for="patient_weight" class="white-text">Weight (kg)</label>
     </div>
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
       <textarea name="extraInfo" id="textarea1" class="materialize-textarea" maxlength="200"
-        data-length="200"></textarea>
+        data-length="200">The is clearly something wrong with this person!</textarea>
       <label for="textarea1" class="white-text">Extra info (Optional)</label>
     </div>
 
@@ -453,11 +453,11 @@
 
     <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
       <select name="town" id="town">
-        <option value="" selected>-Select-</option>
+        <option value="">-Select-</option>
         <option value="Kitwe">Kitwe</option>
         <option value="Ndola">Ndola</option>
         <option value="Mufulira">Mufulira</option>
-        <option value="Luanshya">Luanshya</option>
+        <option value="Luanshya" selected>Luanshya</option>
         <option value="Chingola">Chingola</option>
         <option value="Chililabombwe">Chililabombwe</option>
       </select>

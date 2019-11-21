@@ -20,7 +20,8 @@ adminForm.addEventListener('submit', (e) => {
           console.log(doc.id, " => ", doc.data());
 
           db.collection('users').doc(doc.id).update({
-            bio: 'Command Center'
+            bio: 'Command Center',
+            bio: 'base'
           });
 
           adminForm.reset();
@@ -87,6 +88,7 @@ signupForm.addEventListener('submit', (e) => {
   auth.createUserWithEmailAndPassword(email, password).then(cred => {
     return db.collection('users').doc(cred.user.uid).set({
       bio: signupForm['signup-bio'].value,
+      town: signupForm['town'].value,
       email: email
     });
   }).then(() => {
@@ -230,22 +232,89 @@ loginForm.addEventListener('submit', (e) => {
 
 
 // SEND PATCIENT'S DATA
-const createForm = document.querySelector('#patient_form_id');
-createForm.addEventListener('submit', (e) => {
+const form2 = document.querySelector('#patient_form_id');
+form2.addEventListener('submit', (e) => {
   e.preventDefault();
-  records_submit_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
-
-  db.collection('guides').add({
-    title: createForm.title.value,
-    content: createForm.content.value
-  }).then(() => {
-    records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
-    var text = '<span>STATUS: Data Sent Successful!</span>';
+  
+  if (!lat || lat===0) {
+    var text = '<span class="white-text text-darken-1"><b>Please Select Patient\'s Location<i class="material-icons">room</i></b></span>';
     M.toast({
       html: text
     });
-  }).catch(err => {
-    records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
-    console.log(err.message);
-  });
+  } else {
+    records_submit_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
+
+    let date = new Date();
+    // let time = date.getHours() + ":" + date.getMinutes();
+    let time = date.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    });
+
+    var patient_temp = '',
+      patient_bp = '',
+      patient_weight = '';
+    if (form2.patient_temp.value == null || form2.patient_temp.value == "") {
+      patient_temp = 'Non';
+    } else {
+      patient_temp = form2.patient_temp.value + '℃';
+    }
+
+    if (form2.patient_bp.value == null || form2.patient_bp.value == "") {
+      patient_bp = 'Non';
+      console.log('Non');
+    } else {
+      patient_bp = form2.patient_bp.value + 'mmHg';
+    }
+
+    if (form2.patient_weight.value == null || form2.patient_weight.value == "") {
+      patient_weight = 'Non';
+    } else {
+      patient_weight = form2.patient_weight.value + 'kg';
+    }
+
+    console.log(form2.patient_name.value);
+
+    const patient_info = {
+      agent_email: email,
+      doc_email: '',
+      patient_name: form2.patient_name.value,
+      patient_age: form2.patient_age.value,
+      ageType: form2.ageType.value,
+      sex: document.querySelector('input[name=sex]:checked').value,
+      patient_temp: patient_temp,
+      patient_bp: patient_bp,
+      patient_weight: patient_weight,
+      textarea1: form2.textarea1.value,
+      priority: form2.priority.value,
+      town: form2.town.value,
+      location: form2.location.value,
+      coordinates: new firebase.firestore.GeoPoint(lat, long),
+      date: date.toDateString() + " " + time,
+      actual_date: date,
+      prescription1: 'none',
+      prescription2: 'none',
+      prescription3: 'none',
+      diagnosis: 'none',
+      extra_doctor_info: 'none',
+      review_date: 'none',
+      doc_med_id: '',
+      review_state: false
+    };
+
+    db.collection('guides').doc('1').set(patient_info).then(() => {
+      records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
+      var text = '<span>STATUS: Data Sent Successful!</span>';
+      M.toast({
+        html: text
+      });
+      lat=0;
+    }).catch(err => {
+      records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
+      console.log(err.message);
+    });
+  } //end if-lat
+
+
 });
