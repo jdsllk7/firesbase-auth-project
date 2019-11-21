@@ -15,56 +15,52 @@
 
 <body class="grey darken-3">
 
+
+
   <!-- top nav -->
   <div class="navbar-fixed">
     <nav class="green darken-3" style="z-index: 999;">
       <div class="nav-wrapper z-depth-0">
-        <a href="#!" onclick="home()" class="brand-logo">Tele [Health]</a>
+        <a href="#!" onclick='home(localStorage.getItem("state"))' class="brand-logo" style="font-size: 1.6em;">Tele [Health]</a>
         <a href="#" data-target="slide-out" class="sidenav-trigger">
           <i class="material-icons">menu</i>
         </a>
-        <!-- <a href="#" onclick="home()" class="sidenav-trigger right logged-in" id="home_link" style="display: none;">
-          <i class="material-icons">home</i></a> -->
-
-        <!-- <a href="#" onclick="home()" class="sidenav-trigger right white-text logged-in" id="home_link" style="display: none;">
-              <i class="material-icons white-text">home</i></a> -->
-
-
-        <a href="#" class="white-text hide-on-large-only sidenav-trigger modal-trigger right logged-out"
+        <a href="#" class="white-text hide-on-large-only sidenav-trigger modal-trigger right logged_out"
           style="display: none;" data-target="modal-login"><b>Login</b>
         </a>
 
-        <ul class="right hide-on-med-and-down">
-          <li class="logged-in agent_view doc_view" style="display: none;" id="home_link">
-            <a onclick="home()" href="#" class="waves-effect white-text sidenav-close">
+        <ul class="right">
+          <li class="logged_in right" style="display: none;">
+            <a onclick='home(localStorage.getItem("state"))' href="#" class="waves-effect white-text">
               <i class="material-icons white-text">home</i>
             </a>
           </li>
-          <li class="logged-in" style="display: none;">
+        </ul>
+
+        <ul class="right hide-on-med-and-down">
+
+          <li class="logged_in" style="display: none;">
             <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
           </li>
-          <li class="adminzzz" style="display: none;">
-            <a href="#" class="white-text modal-trigger" data-target="modal-create">Create Guide</a>
-          </li>
-          <li class="logged-in doc_view" style="display: none;" id="review_links22">
-            <a onclick="alert('doc')" href="#" class="waves-effect white-text sidenav-close" id="">Med Response
+          <li class="doc" style="display: none;">
+            <a onclick="doc_med_response()" href="#" class="waves-effect white-text sidenav-close">Current Cases
             </a>
           </li>
-          <li class="logged-in doc_view" style="display: none;" id="review_links22">
-            <a onclick="alert('doc')" href="#" class="waves-effect white-text sidenav-close" id="">Med History
+          <li class="doc" style="display: none;">
+            <a onclick="doc_med_history()" href="#" class="waves-effect white-text sidenav-close">Medical Achieve
             </a>
           </li>
-          <li class="logged-in agent_view" style="display: none;" id="review_links22">
-            <a onclick="reviewed_records()" href="#" class="waves-effect white-text sidenav-close" id="">Reviewed
+          <li class="agent" style="display: none;">
+            <a onclick="agent_reviewed_records()" href="#" class="waves-effect white-text sidenav-close">Reviewed
               Records</a>
           </li>
-          <li class="logged-in agent_view" style="display: none;" id="send_links22">
-            <a onclick="send_records()" href="#" class="waves-effect white-text sidenav-close" id="">Send Tests</a>
+          <li class="agent" style="display: none;">
+            <a onclick="agent_send_records()" href="#" class="waves-effect white-text sidenav-close">Send Tests</a>
           </li>
-          <li class="logged-in" style="display: none;">
+          <li class="logged_in" style="display: none;">
             <a href="#" class="white-text" id="logout">Logout</a>
           </li>
-          <li class="logged-out" style="display: none;">
+          <li class="logged_out" style="display: none;">
             <a href="#" class="white-text modal-trigger" data-target="modal-login">Login</a>
           </li>
         </ul>
@@ -88,41 +84,37 @@
         <a href="#email"><span class="white-text email" id="email_profile"></span></a>
       </div>
     </li>
-    <li><a href="#!" onclick="home()" class="sidenav-close white-text agent_view doc_view">
+    <li><a href="#!" onclick='home(localStorage.getItem("state"))' class="sidenav-close white-text logged_in">
         <i class="material-icons white-text">home</i>Home</a>
     </li>
-    <li class="logged-in" style="display: none;">
+    <li class="logged_in" style="display: none;">
       <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
     </li>
-    <li class="logged-out" style="display: none;">
+    <li class="logged_out" style="display: none;">
       <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-login">Login</a>
     </li>
-    <li class="adminzzz" style="display: none;">
-      <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-create">Create
-        Guide</a>
-    </li>
-    <li class="logged-in" style="display: none;">
+    <li class="logged_in" style="display: none;">
       <a href="#" class="white-text sidenav-close" id="logout2">Logout</a>
     </li>
     <li class="admin" style="display: none;">
       <a href="#" class="white-text modal-trigger sidenav-close" data-target="modal-signup">Register Account</a>
     </li>
     <li>
-      <div class="logged-in" class="divider"></div>
+      <div class="logged_in" class="divider"></div>
     </li>
-    <li><a class="logged-in subheader white-text agent_view"><i class="material-icons white-text">print</i> PAGES</a>
+    <li><a class="logged_in subheader white-text"><i class="material-icons white-text">print</i> PAGES</a>
     </li>
-    <li class="logged-in agent_view" style="display: none;" id="review_links11">
-      <a onclick="reviewed_records()" href="#" class="waves-effect white-text sidenav-close" id="">Reviewed Records</a>
+    <li class="agent" style="display: none;">
+      <a onclick="agent_reviewed_records()" href="#" class="waves-effect white-text sidenav-close">Reviewed Records</a>
     </li>
-    <li class="logged-in agent_view" style="display: none;" id="send_links11">
-      <a onclick="send_records()" href="#" class="waves-effect white-text sidenav-close" id="">Send Tests</a>
+    <li class="agent" style="display: none;">
+      <a onclick="agent_send_records()" href="#" class="waves-effect white-text sidenav-close">Send Tests</a>
     </li>
-    <li class="logged-in doc_view" style="display: none;" id="review_links11">
-      <a onclick="alert('doc')" href="#" class="waves-effect white-text sidenav-close" id="">Med Response</a>
+    <li class="doc" style="display: none;">
+      <a onclick="doc_med_response()" href="#" class="waves-effect white-text sidenav-close">Current Cases</a>
     </li>
-    <li class="logged-in doc_view" style="display: none;" id="send_links11">
-      <a onclick="alert('doc')" href="#" class="waves-effect white-text sidenav-close" id="">Med History</a>
+    <li class="doc" style="display: none;">
+      <a onclick="doc_med_history()" href="#" class="waves-effect white-text sidenav-close">Medical Achieve</a>
     </li>
   </ul>
 
@@ -149,10 +141,6 @@
           <input type="password" id="signup-password" required />
           <label for="signup-password">Enter Medical ID</label>
         </div>
-        <!-- <div class="input-field">
-          <input type="text" id="signup-bio" required />
-          <label for="signup-bio">One Line Bio</label>
-        </div> -->
         <div class="input-field">
           <select id="signup-bio" required>
             <option value="Health Agent" selected>Health Agent</option>
@@ -176,7 +164,7 @@
           <label for="login-email">Email address</label>
         </div>
         <div class="input-field">
-          <input type="password" id="login-password" required />
+          <input type="password" id="login-password" value="000000" required />
           <label for="login-password">Your password</label>
         </div>
         <button class="btn green darken-3 z-depth-0" style="" id="login_btn">Login</button>
@@ -189,12 +177,12 @@
   <div id="modal-account" class="modal">
     <div class="modal-content center-align">
       <h4>Account details</h4><br />
-      <div class="account-details"></div>
+      <div class="account_details"></div>
     </div>
   </div>
 
   <!-- CREATE GUIDE MODAL -->
-  <div id="modal-create" class="modal">
+  <!-- <div id="modal-create" class="modal">
     <div class="modal-content">
       <h4>Create Guide</h4><br />
       <form id="create-form">
@@ -209,7 +197,7 @@
         <button class="btn green darken-3 z-depth-0">Create</button>
       </form>
     </div>
-  </div>
+  </div> -->
 
 
 
@@ -218,12 +206,42 @@
 
 
 
+
+  <!---------------------------------------- DOC_CARDS ------------------------------------------->
+  <div class="container center doc_home_card hide_ui" style="margin-top: 40px; display: none;">
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <div class="card blue-grey lighten-5">
+            <div class="card-content white-text">
+              <span class="card-title blue-grey-text">Review Current Cases</span>
+              <p class="blue-grey-text">Open to view all patient records sent by health agents.</p>
+            </div>
+            <div class="card-action">
+              <a class="green-text" onclick="doc_med_response()" href="#">Open</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <div class="card blue-grey lighten-5">
+            <div class="card-content white-text">
+              <span class="card-title blue-grey-text">View Medical Achieves</span>
+              <p class="blue-grey-text">Submit medical test records to nearby Doctors to have them reviewed.</p>
+            </div>
+            <div class="card-action">
+              <a class="green-text" onclick="doc_med_history()" href="#">Open</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 
 
   <!---------------------------------------- ADMIN ------------------------------------------->
-  <div class="container center admin" id="admin_card" style="margin-top: 50px; display: none;">
+  <div class="container center admin hide_ui" style="margin-top: 30px; display: none;">
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5 z-depth-0">
@@ -249,7 +267,7 @@
 
 
   <!-------------------------------- ADMINISTRATIVE PRIVILEGES ------------------------------------>
-  <div class="container center admin" id="admin_card" style="margin-top: 50px; display: none;">
+  <div class="container center admin hide_ui" style="margin-top: 50px; display: none;">
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5 z-depth-0">
@@ -274,7 +292,7 @@
 
 
   <!---------------------------------------- LOGGED OUT ------------------------------------------->
-  <div class="container center logged-out" id="logged_out_card" style="margin-top: 100px; display: none;">
+  <div class="container center logged_out" style="margin-top: 100px; display: none;">
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5 z-depth-0">
@@ -296,7 +314,7 @@
 
 
   <!---------------------------------------- AGENT_CARDS ------------------------------------------->
-  <div class="container center" id="home_cards" style="margin-top: 40px; display: none;">
+  <div class="container center agent_cards hide_ui" style="margin-top: 40px; display: none;">
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5">
@@ -306,7 +324,7 @@
               and administer medicator as instructed by the doctor.</p>
           </div>
           <div class="card-action">
-            <a class="green-text" onclick="reviewed_records()" href="#">Open</a>
+            <a class="green-text" onclick="agent_reviewed_records()" href="#">Open</a>
           </div>
         </div>
       </div>
@@ -319,7 +337,7 @@
             <p class="blue-grey-text">Submit medical test records to nearby Doctors to have them reviewed.</p>
           </div>
           <div class="card-action">
-            <a class="green-text" onclick="send_records()" href="#">Open</a>
+            <a class="green-text" onclick="agent_send_records()" href="#">Open</a>
           </div>
         </div>
       </div>
@@ -328,8 +346,10 @@
 
 
 
-  <!-- GUIDE LIST -->
-  <div class="container" id="records" style="margin-top: 40px; display: none;">
+
+
+  <!----------------------------- AGENT RECORDS LIST -------------------------->
+  <div class="container agent_list hide_ui" style="margin-top: 40px; display: none;">
     <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
             offset-s1 white-text">Reviewed Patient Records
       <i class="material-icons">clear_all</i></h5>
@@ -343,14 +363,13 @@
 
 
 
-  <!---------------------------------------- FORM ------------------------------------------->
-  <form class="container row white-text" id="patient_form_id" style="display: none;">
+  <!----------------------------------------AGENT FORM ------------------------------------------->
+  <form class="container row white-text agent_form hide_ui" id="patient_form_id" style="display: none;">
 
     <div>
 
       <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
-          offset-s1">Enter Patient's
-        info
+          offset-s1">Enter Patient's info
         <i class="material-icons">info_outline</i></h5>
 
       <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">

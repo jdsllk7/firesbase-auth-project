@@ -43,6 +43,12 @@ adminForm.addEventListener('submit', (e) => {
 });
 
 
+
+
+
+
+
+
 // listen for auth status changes
 auth.onAuthStateChanged(user => {
   if (user) {
@@ -51,30 +57,20 @@ auth.onAuthStateChanged(user => {
       setupUI(user);
     });
     db.collection('guides').onSnapshot(snapshot => {
-      setupGuides(snapshot.docs);
-    }, err => console.log(err.message));
+        setupGuides(snapshot.docs);
+      }, err =>
+      console.log());
   } else {
     setupUI();
     setupGuides([]);
   }
 });
 
-// create new guide
-const createForm = document.querySelector('#create-form');
-createForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  db.collection('guides').add({
-    title: createForm.title.value,
-    content: createForm.content.value
-  }).then(() => {
-    // close the create modal & reset form
-    const modal = document.querySelector('#modal-create');
-    M.Modal.getInstance(modal).close();
-    createForm.reset();
-  }).catch(err => {
-    console.log(err.message);
-  });
-});
+
+
+
+
+
 
 // signup
 const signupForm = document.querySelector('#signup-form');
@@ -103,11 +99,13 @@ signupForm.addEventListener('submit', (e) => {
     M.toast({
       html: text
     });
+    console.log("Account Registered");
     sigup_btn.innerHTML = "Submit";
     //logout immediately a registering a user
     auth.signOut();
-    home_out();
-    localStorage.setItem("user", "out");
+    brand_logo.innerHTML = 'Tele [Health]';
+    logged_out();
+    localStorage.setItem("user", "unknown");
   }).catch(err => {
     signupForm.querySelector('.error').innerHTML = err.message;
     sigup_btn.innerHTML = "Submit";
@@ -115,30 +113,45 @@ signupForm.addEventListener('submit', (e) => {
 
 });
 
-// logout
+
+
+
+
+
+
+
+// LOGOUT
 const logout = document.querySelector('#logout');
 logout.addEventListener('click', (e) => {
   e.preventDefault();
   auth.signOut();
-  home_out();
-  localStorage.setItem("user", "out");
+  brand_logo.innerHTML = 'Tele [Health]';
+  localStorage.setItem("user", "unknown");
   var text = '<span>STATUS: Thank you, Goodbye...</span>';
   M.toast({
     html: text
   });
+  logged_out();
+  console.log("Logged Out");
 });
 // logout2
 const logout2 = document.querySelector('#logout2');
 logout2.addEventListener('click', (e) => {
   e.preventDefault();
   auth.signOut();
-  home_out();
-  localStorage.setItem("user", "out");
+  brand_logo.innerHTML = 'Tele [Health]';
+  localStorage.setItem("user", "unknown");
   var text = '<span>STATUS: Thank you, Goodbye...</span>';
   M.toast({
     html: text
   });
+  logged_out();
+  console.log("Logged Out");
 });
+
+
+
+
 
 
 
@@ -158,20 +171,26 @@ loginForm.addEventListener('submit', (e) => {
   // log the user in
   auth.signInWithEmailAndPassword(email, password).then((cred) => {
 
-
-
-
-
     db.collection("users").where("email", "==", email)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.data().bio);
+          console.log("Logged in as: " + doc.data().bio);
+
           if (doc.data().bio.includes("Doctor") === true) {
             localStorage.setItem("user", doc.data().bio);
+            brand_logo.innerHTML = doc.data().bio;
+            doc_home();
+
           } else if (doc.data().bio.includes("Health Agent") === true) {
             localStorage.setItem("user", doc.data().bio);
+            brand_logo.innerHTML = doc.data().bio;
+            agent_home();
+
+          } else if (doc.data().bio.includes("Command Center") === true) {
+            localStorage.setItem("user", doc.data().bio);
+            brand_logo.innerHTML = doc.data().bio;
+            admin();
           }
         });
       })
@@ -179,19 +198,13 @@ loginForm.addEventListener('submit', (e) => {
         console.log("Error getting documents: ", error);
       });
 
-
-
-
-
-
-
-    // close the signup modal & reset form
+    // close the sign in modal & reset form
     const modal = document.querySelector('#modal-login');
     M.Modal.getInstance(modal).close();
     loginForm.reset();
     loginForm.querySelector('.error').innerHTML = '';
     login_btn.innerHTML = "Login";
-    home();
+
     var text = '<span>STATUS: Welcome to TeleHealth...</span>';
     M.toast({
       html: text
@@ -201,4 +214,38 @@ loginForm.addEventListener('submit', (e) => {
     login_btn.innerHTML = "Login";
   });
 
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// SEND PATCIENT'S DATA
+const createForm = document.querySelector('#patient_form_id');
+createForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  records_submit_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
+
+  db.collection('guides').add({
+    title: createForm.title.value,
+    content: createForm.content.value
+  }).then(() => {
+    records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
+    var text = '<span>STATUS: Data Sent Successful!</span>';
+    M.toast({
+      html: text
+    });
+  }).catch(err => {
+    records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
+    console.log(err.message);
+  });
 });
