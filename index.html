@@ -151,7 +151,7 @@
             <option value="Health Agent">Health Agent</option>
             <option value="Doctor">Doctor</option>
           </select>
-          <label class="white-text">Account Type</label>
+          <label class="">Account Type</label>
         </div>
 
         <div class="input-field">
@@ -164,7 +164,7 @@
             <option value="Chingola">Chingola</option>
             <option value="Chililabombwe">Chililabombwe</option>
           </select>
-          <label class="white-text">Town</label>
+          <label class="">Town</label>
         </div>
 
         <button class="btn green darken-3 z-depth-0" id="sigup_btn">Submit</button>
@@ -198,11 +198,9 @@
       <h5>Account details</h5><br/>
       <div class="account_details"></div>
       <br>
-      <button onclick="M.Modal.getInstance(modal).close();" class="btn center green darken-3 z-depth-0">Okay</button>
+      <!-- <button onclick="M.Modal.getInstance(modal).close();" class="btn center green darken-3 z-depth-0">Okay</button> -->
     </div>
   </div>
-
-
 
 
 
@@ -240,6 +238,39 @@
 
 
 
+  <!----------------------------- DOC CURRENT LIST -------------------------->
+  <div class="container doc_med_response_ui hide_ui" style="margin-top: 40px; display: none;">
+    <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
+            offset-s1 white-text">Review Current Cases
+      <i class="material-icons">clear_all</i></h5>
+    <ul class="collapsible z-depth-0 doc_med_response_list" style="border: none;">
+      <!-- output rendered in index.js  -->
+    </ul>
+  </div>
+
+
+
+
+   <!----------------------------- DOC ACHIEVE LIST -------------------------->
+   <div class="container doc_med_history_ui hide_ui" style="margin-top: 40px; display: none;">
+    <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
+            offset-s1 white-text">View Medical Achieves
+      <i class="material-icons">clear_all</i></h5>
+    <ul class="collapsible z-depth-0 doc_med_history_list" style="border: none;">
+      <!-- output rendered in index.js  -->
+    </ul>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
   <!---------------------------------------- ADMIN ------------------------------------------->
   <div class="container center admin hide_ui" style="margin-top: 30px; display: none;">
     <div class="row">
@@ -273,6 +304,9 @@
         <div class="card blue-grey lighten-5 z-depth-0">
           <div class="card-content white-text">
             <span class="card-title blue-grey-text">Administrative Privileges</span>
+            <p class="blue-grey-text">Give someone else the ability to register and open account
+              <!-- <hr style="width:90%;"> -->
+            </p>
             <form class="admin-actions admin">
               <div class="input-field">
                 <input type="email" id="admin-email" required />
@@ -382,7 +416,7 @@
         <label for="patient_age" class="white-text">Age</label>
       </div>
       <div class="input-field col s5">
-        <select name="ageType" id="ageType">
+        <select name="ageType" id="ageType" required>
           <option value="years" selected>Years</option>
           <option value="months">Months</option>
           <option value="weeks">Weeks</option>
@@ -443,7 +477,7 @@
 
 
     <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
-      <select name="priority" id="priority">
+      <select name="priority" id="priority" required>
         <option value="" selected>-Select-</option>
         <option value="critical">Critical</option>
       </select>
@@ -452,7 +486,7 @@
 
 
     <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
-      <select name="town" id="town">
+      <select name="town" id="town" required>
         <option value="">-Select-</option>
         <option value="Kitwe">Kitwe</option>
         <option value="Ndola">Ndola</option>
@@ -466,7 +500,7 @@
 
 
     <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
-      <select name="location" id="location" onchange="getLocation()">
+      <select name="location" id="location" onchange="getLocation()" required>
         <option value="" selected>-Select-</option>
         <option value="Health Center">Health Center</option>
         <option value="Remote Location">Remote Location</option>

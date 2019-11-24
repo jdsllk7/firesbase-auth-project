@@ -20,6 +20,5 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   $(document).ready(function () {
-    $('.progress').fadeOut();
     $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
   });

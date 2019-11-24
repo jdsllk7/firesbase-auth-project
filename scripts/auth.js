@@ -2,7 +2,7 @@
 const adminForm = document.querySelector('.admin-actions');
 adminForm.addEventListener('submit', (e) => {
   e.preventDefault();
-
+  progress.style.visibility = "visible";
   status_upgrade_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
 
   const adminEmail = document.querySelector('#admin-email').value;
@@ -21,7 +21,7 @@ adminForm.addEventListener('submit', (e) => {
 
           db.collection('users').doc(doc.id).update({
             bio: 'Command Center',
-            bio: 'base'
+            town: 'base'
           });
 
           adminForm.reset();
@@ -40,6 +40,7 @@ adminForm.addEventListener('submit', (e) => {
       });
 
     status_upgrade_btn.innerHTML = "Make admin";
+    progress.style.visibility = "hidden";
   });
 });
 
@@ -58,12 +59,18 @@ auth.onAuthStateChanged(user => {
       setupUI(user);
     });
     db.collection('guides').onSnapshot(snapshot => {
-        setupGuides(snapshot.docs);
+      agentListView(snapshot.docs);
+      doc_current_list(snapshot.docs);
+      doc_achieve_list(snapshot.docs);
       }, err =>
       console.log());
+      progress.style.visibility = "hidden";
   } else {
     setupUI();
-    setupGuides([]);
+    agentListView([]);
+    doc_current_list([]);
+    doc_achieve_list([]);
+    progress.style.visibility = "hidden";
   }
 });
 
@@ -73,10 +80,11 @@ auth.onAuthStateChanged(user => {
 
 
 
-// signup
+// register account
 const signupForm = document.querySelector('#signup-form');
 signupForm.addEventListener('submit', (e) => {
   e.preventDefault();
+  progress.style.visibility = "visible";
 
   sigup_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
 
@@ -101,6 +109,7 @@ signupForm.addEventListener('submit', (e) => {
     M.toast({
       html: text
     });
+    progress.style.visibility = "hidden";
     console.log("Account Registered");
     sigup_btn.innerHTML = "Submit";
     //logout immediately a registering a user
@@ -111,6 +120,7 @@ signupForm.addEventListener('submit', (e) => {
   }).catch(err => {
     signupForm.querySelector('.error').innerHTML = err.message;
     sigup_btn.innerHTML = "Submit";
+    progress.style.visibility = "hidden";
   });
 
 });
@@ -126,6 +136,7 @@ signupForm.addEventListener('submit', (e) => {
 const logout = document.querySelector('#logout');
 logout.addEventListener('click', (e) => {
   e.preventDefault();
+  progress.style.visibility = "visible";
   auth.signOut();
   brand_logo.innerHTML = 'Tele [Health]';
   localStorage.setItem("user", "unknown");
@@ -140,6 +151,7 @@ logout.addEventListener('click', (e) => {
 const logout2 = document.querySelector('#logout2');
 logout2.addEventListener('click', (e) => {
   e.preventDefault();
+  progress.style.visibility = "visible";
   auth.signOut();
   brand_logo.innerHTML = 'Tele [Health]';
   localStorage.setItem("user", "unknown");
@@ -163,6 +175,7 @@ logout2.addEventListener('click', (e) => {
 const loginForm = document.querySelector('#login-form');
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
+  progress.style.visibility = "visible";
 
   login_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
 
@@ -198,6 +211,7 @@ loginForm.addEventListener('submit', (e) => {
       })
       .catch(function (error) {
         console.log("Error getting documents: ", error);
+        progress.style.visibility = "hidden";
       });
 
     // close the sign in modal & reset form
@@ -211,9 +225,11 @@ loginForm.addEventListener('submit', (e) => {
     M.toast({
       html: text
     });
+    progress.style.visibility = "hidden";
   }).catch(err => {
     loginForm.querySelector('.error').innerHTML = err.message;
     login_btn.innerHTML = "Login";
+    progress.style.visibility = "hidden";
   });
 
 });
@@ -235,12 +251,14 @@ loginForm.addEventListener('submit', (e) => {
 const form2 = document.querySelector('#patient_form_id');
 form2.addEventListener('submit', (e) => {
   e.preventDefault();
+  progress.style.visibility = "visible";
   
   if (!lat || lat===0) {
     var text = '<span class="white-text text-darken-1"><b>Please Select Patient\'s Location<i class="material-icons">room</i></b></span>';
     M.toast({
       html: text
     });
+    progress.style.visibility = "hidden";
   } else {
     records_submit_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
 
@@ -277,8 +295,7 @@ form2.addEventListener('submit', (e) => {
     console.log(form2.patient_name.value);
 
     const patient_info = {
-      agent_email: email,
-      doc_email: '',
+      agent_email: user_email,
       patient_name: form2.patient_name.value,
       patient_age: form2.patient_age.value,
       ageType: form2.ageType.value,
@@ -291,28 +308,30 @@ form2.addEventListener('submit', (e) => {
       town: form2.town.value,
       location: form2.location.value,
       coordinates: new firebase.firestore.GeoPoint(lat, long),
-      date: date.toDateString() + " " + time,
-      actual_date: date,
+      agent_sent_date: date.toDateString() + " " + time,
+      doc_email: '',
       prescription1: 'none',
       prescription2: 'none',
       prescription3: 'none',
       diagnosis: 'none',
       extra_doctor_info: 'none',
       review_date: 'none',
-      doc_med_id: '',
-      review_state: false
+      review_state: false,
+      achieve: false
     };
 
-    db.collection('guides').doc('1').set(patient_info).then(() => {
+    db.collection('guides').doc('key '+new Date()).set(patient_info).then(() => {
       records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
       var text = '<span>STATUS: Data Sent Successful!</span>';
       M.toast({
         html: text
       });
+      progress.style.visibility = "hidden";
       lat=0;
     }).catch(err => {
       records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
       console.log(err.message);
+      progress.style.visibility = "hidden";
     });
   } //end if-lat
 
