@@ -20,7 +20,7 @@
   <!-- top nav -->
   <div class="navbar-fixed">
     <nav class="green darken-3" style="z-index: 999;">
-      <div class="nav-wrapper z-depth-0">
+      <div class="nav-wrapper container z-depth-0">
         <a href="#!" onclick='home(localStorage.getItem("state"))' class="brand-logo" style="font-size: 1.6em;">Tele
           [Health]</a>
         <a href="#" data-target="slide-out" class="sidenav-trigger">
@@ -78,11 +78,13 @@
     <li>
       <div class="user-view">
         <div class="background">
-          <img src="img/stones.jpg" style="width: 100%;height: 100%;">
+          <img src="img/1234.jpg" style="width: 100%;height: 100%;">
         </div>
         <a href="#user"><img class="circle" src="img/profile.jpg"></a>
         <br>
-        <a href="#email"><span class="white-text email" id="email_profile"></span></a>
+        <a href="#email">
+          <span class="white-text email" id="email_profile" style="text-shadow: 2px 2px 4px #000000;"></span>
+        </a>
       </div>
     </li>
     <li><a href="#!" onclick='home(localStorage.getItem("state"))' class="sidenav-close white-text logged_in">
@@ -195,7 +197,7 @@
   <!-- ACCOUNT MODAL -->
   <div id="modal-account" class="modal">
     <div class="modal-content center-align">
-      <h5>Account details</h5><br/>
+      <h5>Account details</h5><br />
       <div class="account_details"></div>
       <br>
       <!-- <button onclick="M.Modal.getInstance(modal).close();" class="btn center green darken-3 z-depth-0">Okay</button> -->
@@ -251,8 +253,8 @@
 
 
 
-   <!----------------------------- DOC ACHIEVE LIST -------------------------->
-   <div class="container doc_med_history_ui hide_ui" style="margin-top: 40px; display: none;">
+  <!----------------------------- DOC ACHIEVE LIST -------------------------->
+  <div class="container doc_med_history_ui hide_ui" style="margin-top: 40px; display: none;">
     <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
             offset-s1 white-text">View Medical Achieves
       <i class="material-icons">clear_all</i></h5>
@@ -501,7 +503,6 @@
 
     <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
       <select name="location" id="location" onchange="getLocation()" required>
-        <option value="" selected>-Select-</option>
         <option value="Health Center">Health Center</option>
         <option value="Remote Location">Remote Location</option>
       </select>

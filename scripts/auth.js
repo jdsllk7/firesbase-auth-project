@@ -316,8 +316,7 @@ form2.addEventListener('submit', (e) => {
       diagnosis: 'none',
       extra_doctor_info: 'none',
       review_date: 'none',
-      review_state: false,
-      achieve: false
+      review_state: '1'
     };
 
     db.collection('guides').doc('key '+new Date()).set(patient_info).then(() => {

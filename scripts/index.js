@@ -25,6 +25,7 @@ const email_profile = document.getElementById("email_profile");
 
 var user_id;
 var user_email;
+var userTown;
 
 
 //ADMIN UI
@@ -212,6 +213,7 @@ const setupUI = (user) => {
     db.collection('users').doc(user.uid).get().then(doc => {
       user_id = user.uid;
       user_email = doc.data().email;
+      userTown = doc.data().town;
       email_profile.innerHTML = "Title: " + doc.data().bio + "<br>Location: " + doc.data().town + "<br>Email:" + doc.data().email;
       const html = `
       Email: <span data-id="${user.uid}">${user.email}</span>
@@ -254,7 +256,7 @@ const agentListView = (data) => {
     });
     guideList.innerHTML = html;
   } else {
-    guideList.innerHTML = '<h5 class="center-align">Login to view guides</h5>';
+    guideList.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
   }
 
 };
@@ -264,22 +266,25 @@ const agentListView = (data) => {
 
 // Doc Current List
 const doc_current_list = (data) => {
-
   if (data.length) {
     let html = '';
     data.forEach(doc => {
       const guide1 = doc.data();
-      const li1 = `
-        <li>
-          <div class="collapsible-header grey lighten-4"> ${guide1.patient_name} </div>
-          <div class="collapsible-body white"> ${guide1.town} </div>
-        </li>
-      `;
-      html += li1;
+      if (guide1.review_state === '1' && guide1.town === userTown) {
+        const li1 = `
+          <li>
+            <div class="collapsible-header grey lighten-4"> ${guide1.patient_name} </div>
+            <div class="collapsible-body white"> ${guide1.town} </div>
+          </li>
+        `;
+        html += li1;
+      }else{
+        doc_med_response_list.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
+      }
     });
     doc_med_response_list.innerHTML = html;
   } else {
-    doc_med_response_list.innerHTML = '<h5 class="center-align">Login to view guides</h5>';
+    doc_med_response_list.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
   }
 
 };
@@ -303,7 +308,7 @@ const doc_achieve_list = (data) => {
     });
     doc_med_history_list.innerHTML = html;
   } else {
-    doc_med_history_list.innerHTML = '<h5 class="center-align">Login to view guides</h5>';
+    doc_med_history_list.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
   }
 
 };
