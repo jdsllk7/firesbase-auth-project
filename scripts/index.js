@@ -25,7 +25,6 @@ const email_profile = document.getElementById("email_profile");
 
 var user_id;
 var user_email;
-var userTown;
 
 
 //ADMIN UI
@@ -239,77 +238,305 @@ const setupUI = (user) => {
 
 
 
-// Agent List
-const agentListView = (data) => {
+/*********************************USER INTERFACES************************************/
+/*********************************USER INTERFACES************************************/
+/*********************************USER INTERFACES************************************/
+/*********************************USER INTERFACES************************************/
+/*********************************USER INTERFACES************************************/
+/*********************************USER INTERFACES************************************/
+/*********************************USER INTERFACES************************************/
+/*********************************USER INTERFACES************************************/
+/*********************************USER INTERFACES************************************/
 
+
+
+
+
+
+
+
+
+
+/**************************************AGENT LIST***********************************/
+/**************************************AGENT LIST***********************************/
+/**************************************AGENT LIST***********************************/
+const agentListView = (data) => {
+  var somethingness0 = 0;
   if (data.length) {
     let html = '';
     data.forEach(doc => {
       const guide = doc.data();
-      const li = `
-        <li>
-        <div class="collapsible-header grey lighten-4"> ${guide.patient_name} </div>
-        <div class="collapsible-body white"> ${guide.town} </div>
-        </li>
-      `;
-      html += li;
+      if (guide.review_state === '2' && guide.town === userTown) {
+        const li = `
+          <li>
+            <div class="collapsible-header grey lighten-4"> ${guide.patient_name} </div>
+            <div class="collapsible-body white"> ${guide.town} </div>
+          </li>
+        `;
+        html += li;
+        somethingness0++;
+      }
     });
     guideList.innerHTML = html;
   } else {
     guideList.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
   }
-
+  if (somethingness0 === 0) {
+    guideList.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
+  } else {
+    somethingness0 = 0;
+  }
 };
 
 
 
 
-// Doc Current List
-const doc_current_list = (data) => {
+
+
+
+
+
+
+
+
+
+/**************************************DOC CURRENT LIST***********************************/
+/**************************************DOC CURRENT LIST***********************************/
+/**************************************DOC CURRENT LIST***********************************/
+const doc_current_list = (data, town) => {
+  var somethingness = 0;
   if (data.length) {
     let html = '';
     data.forEach(doc => {
       const guide1 = doc.data();
-      if (guide1.review_state === '1' && guide1.town === userTown) {
-        const li1 = `
-          <li>
-            <div class="collapsible-header grey lighten-4"> ${guide1.patient_name} </div>
-            <div class="collapsible-body white"> ${guide1.town} </div>
-          </li>
-        `;
+
+      if (guide1.review_state === '1' && guide1.town === town) {
+
+        if (guide1.priority === 'critical') {
+        var li1 = `
+          <li class="medical_data" data-id="">
+          <div class="collapsible-header grey lighten-3">
+            <i class="material-icons">person</i>${guide1.patient_name}
+            <span class="new badge red" data-badge-caption="Condition: ${guide1.priority}"></span>
+          </div>
+          <div class="collapsible-body white">
+            <span class="black-text">
+              <form action="/map" method="GET" class="locate_btn">
+                <input type="hidden" name="lat" value="${guide1.coordinates.latitude}" />
+                <input type="hidden" name="long" value="${guide1.coordinates.longitude}" />
+                <input type="hidden" name="name" value="${guide1.patient_name}" />
+                <button type="submit" class="btn-floating btn waves-effect
+                  waves-light green darken-3 black-text">
+                  <i class="material-icons large">room</i>
+                </button>
+              </form>
+            <form class="doc_form2" data-id="">
+              <h6>RESPONSE TIME:</h6>
+              <span>Submitted On: ${guide1.agent_sent_date}</span><br>
+              
+              <br><hr><br>
+              <h6>PATIENT'S INFO:</h6>
+              <span>Town: ${guide1.town}</span><br>
+              <span>Age: ${guide1.patient_age} ${guide1.ageType}</span><br>
+              <span>Sex: ${guide1.sex}</span><br>
+              <span>Temperature: ${guide1.patient_temp}</span><br>
+              <span>Blood Pressure: ${guide1.patient_bp}</span><br>
+              <span>Weight: ${guide1.patient_weight}</span><br>
+              <br><hr><br>
+              <h6>COMMENT:</h6>
+              <span>&#9830; ${guide1.textarea1}</span><br>
+              <br><hr><br>
+              <h6>DIAGNOSIS:</h6>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <textarea required value="" id="diagnosis" name="diagnosis" class="materialize-textarea" maxlength="200" data-length="200">${guide1.diagnosis}</textarea>
+                  </div>
+                </div>
+              </span><br>
+              <br><hr><br>
+              <h6>MEDICAL PRESCRIPTION:</h6>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <input required placeholder="1st Prescription" value="${guide1.prescription1}" id="prescription1" name="prescription1" type="text" class="validate">
+                  </div>
+                </div>
+              </span><br>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <input placeholder="2nd Prescription" value="${guide1.prescription2}" id="prescription2" name="prescription2" type="text" class="validate">
+                  </div>
+                </div>
+              </span><br>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <input placeholder="3rd Prescription" value="${guide1.prescription3}" id="prescription3" name="prescription3" type="text" class="validate">
+                  </div>
+                </div>
+              </span><br>
+              <br><hr><br>
+              <h6>DOCTOR'S COMMENTS:</h6>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <textarea required placeholder="Add Comment" id="extra_doctor_info" name="extra_doctor_info" class="materialize-textarea" maxlength="200" data-length="200">${guide1.extra_doctor_info}</textarea>
+                  </div>
+                </div>
+              </span><br>
+            </span>
+            <br>
+            <br>
+            
+          </form>
+          </div>
+        </li>
+      `;
+        } else {
+          li1 = `
+          <li class="medical_data" data-id="">
+          <div class="collapsible-header grey lighten-3">
+            <i class="material-icons">person</i>${guide1.patient_name}
+          </div>
+          <div class="collapsible-body white">
+            <span class="black-text">
+              <form method="GET" class="locate_btn">
+                <input type="hidden" name="lat" value="${guide1.coordinates.latitude}" />
+                <input type="hidden" name="long" value="${guide1.coordinates.longitude}" />
+                <input type="hidden" name="name" value="${guide1.patient_name}" />
+                <button type="submit" class="btn-floating btn waves-effect
+                  waves-light green darken-3 black-text">
+                  <i class="material-icons large">room</i>
+                </button>
+              </form>
+            <form class="doc_form2" data-id="">
+              <h6>RESPONSE TIME:</h6>
+              <span>Submitted On: ${guide1.agent_sent_date}</span><br>
+              
+              <br><hr><br>
+              <h6>PATIENT'S INFO:</h6>
+              <span>Town: ${guide1.town}</span><br>
+              <span>Age: ${guide1.patient_age} ${guide1.ageType}</span><br>
+              <span>Sex: ${guide1.sex}</span><br>
+              <span>Temperature: ${guide1.patient_temp}</span><br>
+              <span>Blood Pressure: ${guide1.patient_bp}</span><br>
+              <span>Weight: ${guide1.patient_weight}</span><br>
+              <br><hr><br>
+              <h6>COMMENT:</h6>
+              <span>&#9830; ${guide1.textarea1}</span><br>
+              <br><hr><br>
+              <h6>DIAGNOSIS:</h6>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <textarea required placeholder="Enter Diagnosis" id="diagnosis" name="diagnosis" class="materialize-textarea" maxlength="200" data-length="200">${guide1.diagnosis}</textarea>
+                  </div>
+                </div>
+              </span><br>
+              <br><hr><br>
+              <h6>MEDICAL PRESCRIPTION:</h6>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <input placeholder="1st Prescription" required value="${guide1.prescription1}" id="prescription1" name="prescription1" type="text" class="validate">
+                  </div>
+                </div>
+              </span><br>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <input placeholder="2nd Prescription" value="${guide1.prescription2}" id="prescription2" name="prescription2" type="text" class="validate">
+                  </div>
+                </div>
+              </span><br>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <input placeholder="3rd Prescription" value="${guide1.prescription3}" id="prescription3" name="prescription3" type="text" class="validate">
+                  </div>
+                </div>
+              </span><br>
+              <br><hr><br>
+              <h6>DOCTOR'S COMMENTS:</h6>
+              <span>
+                <div class="row">
+                  <div class="input-field col l8">
+                    <textarea placeholder="Add Comment" id="extra_doctor_info" name="extra_doctor_info" class="materialize-textarea" maxlength="200" data-length="200">${guide1.extra_doctor_info}</textarea>
+                  </div>
+                </div>
+              </span><br>
+            </span>
+            <br>
+            <br>
+            
+          </form>
+          </div>
+        </li>
+  `;
+        }
+
+
+
+
         html += li1;
-      }else{
-        doc_med_response_list.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
+        somethingness++;
       }
     });
     doc_med_response_list.innerHTML = html;
   } else {
     doc_med_response_list.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
   }
-
+  if (somethingness === 0) {
+    doc_med_response_list.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
+  } else {
+    somethingness = 0;
+  }
 };
 
 
 
-// Doc Achieve List
-const doc_achieve_list = (data) => {
 
+
+
+
+
+
+
+
+
+
+
+
+
+/**************************************DOC ACHIEVE/HISTORY LIST***********************************/
+/**************************************DOC ACHIEVE/HISTORY LIST***********************************/
+/**************************************DOC ACHIEVE/HISTORY LIST***********************************/
+const doc_achieve_list = (data) => {
+  var somethingness2 = 0;
   if (data.length) {
     let html = '';
     data.forEach(doc => {
       const guide2 = doc.data();
-      const li2 = `
-        <li>
-          <div class="collapsible-header grey lighten-4"> ${guide2.patient_name} </div>
-          <div class="collapsible-body white"> ${guide2.town} </div>
-        </li>
-      `;
-      html += li2;
+      if (guide2.review_state === '3' && guide2.town === userTown) {
+        const li2 = `
+          <li>
+            <div class="collapsible-header grey lighten-4"> ${guide2.patient_name} </div>
+            <div class="collapsible-body white"> ${guide2.town} </div>
+          </li>
+        `;
+        html += li2;
+        somethingness2++;
+      }
     });
     doc_med_history_list.innerHTML = html;
   } else {
     doc_med_history_list.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
   }
-
+  if (somethingness2 === 0) {
+    doc_med_history_list.innerHTML = '<h6 class="center-align white-text">Sorry...<br>No matching records in database</h6>';
+  } else {
+    somethingness2 = 0;
+  }
 };
-console.log(user_id);

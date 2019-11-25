@@ -344,12 +344,12 @@ form2.addEventListener('submit', (e) => {
       coordinates: new firebase.firestore.GeoPoint(lat, long),
       agent_sent_date: date.toDateString() + " " + time,
       doc_email: '',
-      prescription1: 'none',
-      prescription2: 'none',
-      prescription3: 'none',
-      diagnosis: 'none',
-      extra_doctor_info: 'none',
-      review_date: 'none',
+      prescription1: '',
+      prescription2: '',
+      prescription3: '',
+      diagnosis: '',
+      extra_doctor_info: '',
+      review_date: '',
       review_state: '1'
     };
 
