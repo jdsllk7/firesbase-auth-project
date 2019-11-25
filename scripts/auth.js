@@ -58,13 +58,47 @@ auth.onAuthStateChanged(user => {
       user.admin = idTokenResult.claims.admin;
       setupUI(user);
     });
-    db.collection('guides').onSnapshot(snapshot => {
-      agentListView(snapshot.docs);
-      doc_current_list(snapshot.docs);
-      doc_achieve_list(snapshot.docs);
-      }, err =>
-      console.log());
-      progress.style.visibility = "hidden";
+    
+    db.collection("users").where("email", "==", user.email)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+
+          // console.log(doc.data().town);
+
+
+          db.collection('guides').onSnapshot(snapshot => {
+              agentListView(snapshot.docs);
+              doc_current_list(snapshot.docs,doc.data().town);
+              doc_achieve_list(snapshot.docs);
+            }, err =>
+            console.log(err));
+
+
+        });
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+        var text = "<span>ERROR: Email Doesn't Exist!</span>";
+        M.toast({
+          html: text
+        });
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    progress.style.visibility = "hidden";
   } else {
     setupUI();
     agentListView([]);
@@ -252,8 +286,8 @@ const form2 = document.querySelector('#patient_form_id');
 form2.addEventListener('submit', (e) => {
   e.preventDefault();
   progress.style.visibility = "visible";
-  
-  if (!lat || lat===0) {
+
+  if (!lat || lat === 0) {
     var text = '<span class="white-text text-darken-1"><b>Please Select Patient\'s Location<i class="material-icons">room</i></b></span>';
     M.toast({
       html: text
@@ -319,14 +353,14 @@ form2.addEventListener('submit', (e) => {
       review_state: '1'
     };
 
-    db.collection('guides').doc('key '+new Date()).set(patient_info).then(() => {
+    db.collection('guides').doc('key ' + new Date()).set(patient_info).then(() => {
       records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
       var text = '<span>STATUS: Data Sent Successful!</span>';
       M.toast({
         html: text
       });
       progress.style.visibility = "hidden";
-      lat=0;
+      lat = 0;
     }).catch(err => {
       records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
       console.log(err.message);
