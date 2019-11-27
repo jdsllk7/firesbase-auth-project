@@ -32,7 +32,7 @@
 
         <ul class="right">
           <li class="logged_in right" style="display: none;">
-            <a onclick='home(localStorage.getItem("state"))' href="#" class="waves-effect white-text">
+            <a onclick='home(localStorage.getItem("state"))' href="#" class="waves-effect white-text home_loader">
               <i class="material-icons white-text">home</i>
             </a>
           </li>
@@ -44,14 +44,20 @@
             <a href="#" class="white-text modal-trigger" data-target="modal-account">Account</a>
           </li>
           <li class="doc" style="display: none;">
+            <span class="new badge green doc nav_badge current_data_counter_display" id='' style="display: none;"
+              data-badge-caption=""></span>
             <a onclick="doc_med_response()" href="#" class="waves-effect white-text sidenav-close">Current Cases
             </a>
           </li>
           <li class="doc" style="display: none;">
+            <span class="new badge green doc nav_badge history_data_counter_display" id='' style="display: none;"
+              data-badge-caption=""></span>
             <a onclick="doc_med_history()" href="#" class="waves-effect white-text sidenav-close">Medical Achieve
             </a>
           </li>
           <li class="agent" style="display: none;">
+            <span class="new badge green agent nav_badge reviewed_data_counter_display" id='' style="display: none;"
+              data-badge-caption=""></span>
             <a onclick="agent_reviewed_records()" href="#" class="waves-effect white-text sidenav-close">Reviewed
               Records</a>
           </li>
@@ -108,15 +114,21 @@
     <li><a class="logged_in subheader white-text"><i class="material-icons white-text">print</i> PAGES</a>
     </li>
     <li class="agent" style="display: none;">
+      <span class="new badge green agent nav_badge reviewed_data_counter_display" id='' style="display: none;"
+        data-badge-caption=""></span>
       <a onclick="agent_reviewed_records()" href="#" class="waves-effect white-text sidenav-close">Reviewed Records</a>
     </li>
     <li class="agent" style="display: none;">
       <a onclick="agent_send_records()" href="#" class="waves-effect white-text sidenav-close">Send Tests</a>
     </li>
     <li class="doc" style="display: none;">
+      <span class="new badge green doc nav_badge current_data_counter_display" id='' style="display: none;"
+        data-badge-caption=""></span>
       <a onclick="doc_med_response()" href="#" class="waves-effect white-text sidenav-close">Current Cases</a>
     </li>
     <li class="doc" style="display: none;">
+      <span class="new badge green doc nav_badge history_data_counter_display" id='' style="display: none;"
+        data-badge-caption=""></span>
       <a onclick="doc_med_history()" href="#" class="waves-effect white-text sidenav-close">Medical Achieve</a>
     </li>
   </ul>
@@ -200,7 +212,7 @@
       <h5>Account details</h5><br />
       <div class="account_details"></div>
       <br>
-      <!-- <button onclick="M.Modal.getInstance(modal).close();" class="btn center green darken-3 z-depth-0">Okay</button> -->
+      <!-- <button onclick="document.getElementById('modal-account').style.display='none';" class="btn center green darken-3 z-depth-0">Okay</button> -->
     </div>
   </div>
 
@@ -212,6 +224,8 @@
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5">
+            <span class="new badge green doc nav_badge current_data_counter_display" id='' style="display: none;"
+            data-badge-caption=""></span>
           <div class="card-content white-text">
             <span class="card-title blue-grey-text">Review Current Cases</span>
             <p class="blue-grey-text">Open to view all patient records sent by health agents.</p>
@@ -225,6 +239,8 @@
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5">
+            <span class="new badge green doc nav_badge history_data_counter_display" id='' style="display: none;"
+            data-badge-caption=""></span>
           <div class="card-content white-text">
             <span class="card-title blue-grey-text">View Medical Achieves</span>
             <p class="blue-grey-text">Submit medical test records to nearby Doctors to have them reviewed.</p>
@@ -245,7 +261,7 @@
     <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
             offset-s1 white-text">Review Current Cases
       <i class="material-icons">clear_all</i></h5>
-    <ul class="collapsible z-depth-0 doc_med_response_list black-text" style="border: none;">
+    <ul class="collapsible z-depth-0 doc_med_response_list" style="border: none; display: none;">
       <!-- output rendered in index.js  -->
     </ul>
   </div>
@@ -258,7 +274,7 @@
     <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
             offset-s1 white-text">View Medical Achieves
       <i class="material-icons">clear_all</i></h5>
-    <ul class="collapsible z-depth-0 doc_med_history_list" style="border: none;">
+    <ul class="collapsible z-depth-0 doc_med_history_list" style="border: none; display: none;">
       <!-- output rendered in index.js  -->
     </ul>
   </div>
@@ -354,6 +370,8 @@
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5">
+            <span class="new badge green agent nav_badge reviewed_data_counter_display" id='' style="display: none;"
+            data-badge-caption=""></span>
           <div class="card-content white-text">
             <span class="card-title blue-grey-text">Reviewed Records</span>
             <p class="blue-grey-text">Open to view all reviewed patient records,
@@ -389,7 +407,7 @@
     <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
             offset-s1 white-text">Reviewed Patient Records
       <i class="material-icons">clear_all</i></h5>
-    <ul class="collapsible z-depth-0 guides" style="border: none;">
+    <ul class="collapsible z-depth-0 guides" style="border: none; display: none;">
       <!-- output rendered in index.js  -->
     </ul>
   </div>
@@ -479,7 +497,7 @@
 
 
     <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
-      <select name="priority" id="priority" required>
+      <select name="priority" id="priority">
         <option value="" selected>-Select-</option>
         <option value="Critical">Critical</option>
       </select>
@@ -503,6 +521,7 @@
 
     <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
       <select name="location" id="location" onchange="getLocation()" required>
+        <option value="">-Select-</option>
         <option value="Health Center">Health Center</option>
         <option value="Remote Location">Remote Location</option>
       </select>
@@ -510,8 +529,7 @@
     </div>
 
 
-    <div style="margin-bottom:50px;" class="input-field col s6 offset-s3
-        center">
+    <div style="margin-bottom:50px;" class="input-field col s6 offset-s3 center">
       <button class="btn waves-effect waves-light green darken-3" id="records_submit_btn" type="submit"
         name="patient_submit">
         submit <i class="material-icons right">open_in_new</i>

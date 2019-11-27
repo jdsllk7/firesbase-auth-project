@@ -1,4 +1,4 @@
-// add admin cloud function
+// ADD ADMIN CLOUD FUNCTION
 const adminForm = document.querySelector('.admin-actions');
 adminForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -51,33 +51,70 @@ adminForm.addEventListener('submit', (e) => {
 
 
 
-// listen for auth status changes
+// LISTEN FOR AUTH STATUS CHANGES
 auth.onAuthStateChanged(user => {
   if (user) {
     user.getIdTokenResult().then(idTokenResult => {
       user.admin = idTokenResult.claims.admin;
       setupUI(user);
     });
-    
+
+    //get town for current user
     db.collection("users").where("email", "==", user.email)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-
-          // console.log(doc.data().town);
-
-
+          var current_data_count = 0;
+          var history_data_count = 0;
+          var reviewed_data_count = 0;
           db.collection('guides').onSnapshot(snapshot => {
-              agentListView(snapshot.docs);
-              doc_current_list(snapshot.docs,doc.data().town);
-              doc_achieve_list(snapshot.docs);
-            }, err =>
-            console.log(err));
+            snapshot.docChanges().forEach(change => {
+              console.log(change.type);
+              if (change) {
+                if (change.doc.data().review_state === '1' && change.doc.data().town === doc.data().town) {
+                  current_data_count++;
+                } else if (change.doc.data().review_state != '1' && change.doc.data().town === doc.data().town) {
+                  if(current_data_count === 0){
+                    current_data_count = 0;
+                  }else{
+                    current_data_count--;
+                  }
+                }
+                if (change.doc.data().review_state === '2' && change.doc.data().town === doc.data().town) {
+                  reviewed_data_count++;
+                } else if (change.doc.data().review_state != '1' && change.doc.data().town === doc.data().town) {
+                  if(reviewed_data_count === 0){
+                    reviewed_data_count = 0;
+                  }else{
+                    reviewed_data_count--;
+                  }
+                }
+                if (change.doc.data().review_state != '1') {
+                  history_data_count++;
+                } else if (change.doc.data().review_state != '1' && change.doc.data().town === doc.data().town) {
+                  if(history_data_count === 0){
+                    history_data_count = 0;
+                  }else{
+                    history_data_count--;
+                  }
+                }
+                doc_current_list(change.doc.data(), doc.data().town, change.doc.id);
+                agentListView(change.doc.data());
+                doc_history_list(change.doc.data());
+              }
 
+            }, err => console.log());
+            current_data_counter_display.forEach(item => item.style.display = 'block');
+            current_data_counter_display.forEach(item => item.innerHTML = current_data_count);
+            history_data_counter_display.forEach(item => item.style.display = 'block');
+            history_data_counter_display.forEach(item => item.innerHTML = history_data_count);
+            reviewed_data_counter_display.forEach(item => item.style.display = 'block');
+            reviewed_data_counter_display.forEach(item => item.innerHTML = reviewed_data_count);
 
+            progress.style.visibility = "hidden";
+          }, err => console.log());
         });
-      })
-      .catch(function (error) {
+      }).catch(function (error) {
         console.log("Error getting documents: ", error);
         var text = "<span>ERROR: Email Doesn't Exist!</span>";
         M.toast({
@@ -85,25 +122,11 @@ auth.onAuthStateChanged(user => {
         });
       });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    progress.style.visibility = "hidden";
   } else {
     setupUI();
     agentListView([]);
     doc_current_list([]);
-    doc_achieve_list([]);
+    doc_history_list([]);
     progress.style.visibility = "hidden";
   }
 });
@@ -114,7 +137,9 @@ auth.onAuthStateChanged(user => {
 
 
 
-// register account
+
+
+// REGISTER ACCOUNT
 const signupForm = document.querySelector('#signup-form');
 signupForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -205,7 +230,7 @@ logout2.addEventListener('click', (e) => {
 
 
 
-// login
+// LOGIN
 const loginForm = document.querySelector('#login-form');
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -297,7 +322,6 @@ form2.addEventListener('submit', (e) => {
     records_submit_btn.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
 
     let date = new Date();
-    // let time = date.getHours() + ":" + date.getMinutes();
     let time = date.toLocaleString('en-US', {
       hour: 'numeric',
       minute: 'numeric',
@@ -326,8 +350,6 @@ form2.addEventListener('submit', (e) => {
       patient_weight = form2.patient_weight.value + 'kg';
     }
 
-    console.log(form2.patient_name.value);
-
     const patient_info = {
       agent_email: user_email,
       patient_name: form2.patient_name.value,
@@ -353,12 +375,14 @@ form2.addEventListener('submit', (e) => {
       review_state: '1'
     };
 
-    db.collection('guides').doc('key ' + new Date()).set(patient_info).then(() => {
+    db.collection('guides').doc('id' + new Date().valueOf()).set(patient_info).then(() => {
       records_submit_btn.innerHTML = 'submit <i class="material-icons right">open_in_new</i>';
       var text = '<span>STATUS: Data Sent Successful!</span>';
       M.toast({
         html: text
       });
+      console.log('Data Sent Successfully');
+      form2.reset();
       progress.style.visibility = "hidden";
       lat = 0;
     }).catch(err => {
@@ -369,4 +393,74 @@ form2.addEventListener('submit', (e) => {
   } //end if-lat
 
 
+});
+
+
+
+
+
+
+
+
+
+
+
+
+//DOC SEND REVIEWED DATA
+doc_med_response_list.addEventListener('click', evt => {
+  if (evt.target.tagName === 'A') {
+    home_loader.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
+    var id = evt.target.getAttribute('data-id');
+    var form3 = document.querySelector(`.doc_form[data-id=${id}]`);
+    if (form3.prescription1.value &&
+      form3.diagnosis.value &&
+      form3.extra_doctor_info.value) {
+
+      let date = new Date();
+      let time = date.toLocaleString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      });
+
+      db.collection('guides').doc(id).update({
+          doc_email: user_email,
+          prescription1: form3.prescription1.value,
+          prescription2: form3.prescription2.value,
+          prescription3: form3.prescription3.value,
+          diagnosis: form3.diagnosis.value,
+          extra_doctor_info: form3.extra_doctor_info.value,
+          review_date: date.toDateString() + " " + time,
+          review_state: '2'
+        })
+        .then(function () {
+          form3.reset();
+          console.log("Data successfully updated!");
+          var text = '<span class="white-text text-darken-1"><b>Data Uploaded Successfully!<i class="material-icons">error_outline</i></b></span>';
+          M.toast({
+            html: text
+          });
+          var medical_data = document.querySelector(`.medical_data[data-id=${id}]`);
+          medical_data.style.display = 'none';
+          home_loader.innerHTML = '<i class="material-icons white-text">home</i>';
+
+        }).catch(err => {
+          var text = '<span class="white-text text-darken-1"><b>Unexpected Error Occurred...<i class="material-icons">check_box</i></b></span>';
+          M.toast({
+            html: text
+          });
+          home_loader.innerHTML = '<i class="material-icons white-text">home</i>';
+          console.log(err.message);
+        });
+
+    } else {
+      var text = '<span class="white-text text-darken-1"><b>Fill In Form Correctly...<i class="material-icons">check_box</i></b></span>';
+      M.toast({
+        html: text
+      });
+      console.log('Fill In Form Correctly...');
+      home_loader.innerHTML = '<i class="material-icons white-text">home</i>';
+    } //end else
+
+  } //end if()
 });
