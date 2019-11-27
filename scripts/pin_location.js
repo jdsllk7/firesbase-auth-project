@@ -59,11 +59,16 @@ function showError(error) {
 
 
 
+var lat1;
+var long1;
 
+if (localStorage.getItem("lat")) {
+  lat1 = 1;
+  long1 = -1;
+}
 
-
-var lat1 = Number(localStorage.getItem("lat"));
-var long1 = Number(localStorage.getItem("long"));
+lat1 = Number(localStorage.getItem("lat"));
+long1 = Number(localStorage.getItem("long"));
 locate_name.innerHTML = localStorage.getItem("name");
 
 function initMap() {
@@ -95,4 +100,4 @@ function initMap() {
     map.setZoom(8);
     map.setCenter(marker.getPosition());
   });
-} 
+}

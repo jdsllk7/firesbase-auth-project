@@ -420,7 +420,7 @@ const agentListView = (guide1, town, id) => {
 
 const doc_current_list = (guide1, town, id) => {
 
-  doc_med_response_list.style = 'block';
+  doc_med_response_list.style = 'block'; 
 
   if (guide1.review_state === '1' && guide1.town === town) {
 
