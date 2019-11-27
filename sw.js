@@ -1,10 +1,9 @@
-const dynamicCacheName = 'site-dynamic-v0';
-const staticCacheName   = 'site-static-v0';
+const dynamicCacheName = 'site-dynamic-v4';
+const staticCacheName   = 'site-static-v4';
 const assets = [
     '/',
     '/index.html',
     '/fallback.html',
-    '/img/profile.jpg',
     '/img/profile.jpg',
     '/img/Stethoscope.jpg',
     '/img/icons/icon-128x128.png',
@@ -18,6 +17,7 @@ const assets = [
     '/manifest.json',
     '/css/style.css',
     '/scripts/auth.js',
+    '/scripts/app.js',
     '/scripts/index.js',
     '/scripts/init.js',
     '/scripts/pin_location.js',
@@ -41,18 +41,18 @@ const limitCacheSize = (name, size) => {
 
 // install event 
 self.addEventListener('install', evt => {
-    console.log('service worker installed');
+    // console.log('service worker installed jdslk');
     evt.waitUntil(
         caches.open(staticCacheName).then((cache) => {
             cache.addAll(assets);
-            console.log('caching shell assets...');
+            // console.log('caching shell assets...jdslk');
         })
     );
 });
 
 // activate event
 self.addEventListener('activate', evt => {
-    console.log('service worker activated');
+    // console.log('service worker activated jdslk');
     evt.waitUntil(
         caches.keys().then(keys => {
             // console.log(keys);
@@ -67,18 +67,18 @@ self.addEventListener('activate', evt => {
 // fetch event 
 self.addEventListener('fetch', evt => {
     if (evt.request.url.indexOf('firestore.googleapis.com') === -1) {
-        // console.log('fetching');
+        // console.log('fetching jdslk');
         evt.respondWith(
             caches.match(evt.request).then(cacheRes => {
                 return cacheRes || fetch(evt.request).then(fetchRes => {
                     return caches.open(dynamicCacheName).then(cache => {
                         cache.put(evt.request.url, fetchRes.clone());
                         // check cached items size
-                        limitCacheSize(dynamicCacheName, 10);
+                        limitCacheSize(dynamicCacheName, 30);
                         return fetchRes;
                     })
                 });
-            }).catch(() => caches.match('/fallback.html'))
+            }).catch(() => caches.match('fallback.html'))
         );
     }
 });

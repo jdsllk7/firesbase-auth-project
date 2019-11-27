@@ -1,3 +1,16 @@
+// enable offline data
+db.enablePersistence()
+  .catch(function (err) {
+    if (err.code == 'failed-precondition') {
+      // probably multible tabs open at once
+      console.log('persistance failed');
+    } else if (err.code == 'unimplemented') {
+      // lack of browser support for the feature
+      console.log('persistance not available');
+    }
+  });
+
+
 // ADD ADMIN CLOUD FUNCTION
 const adminForm = document.querySelector('.admin-actions');
 adminForm.addEventListener('submit', (e) => {
@@ -71,37 +84,27 @@ auth.onAuthStateChanged(user => {
             snapshot.docChanges().forEach(change => {
               console.log(change.type);
               if (change) {
-                if (change.doc.data().review_state === '1' && change.doc.data().town === doc.data().town) {
-                  current_data_count++;
-                } else if (change.doc.data().review_state != '1' && change.doc.data().town === doc.data().town) {
-                  if(current_data_count === 0){
-                    current_data_count = 0;
-                  }else{
-                    current_data_count--;
-                  }
-                }
+
+                //if send data = 2
                 if (change.doc.data().review_state === '2' && change.doc.data().town === doc.data().town) {
+                  agentListView(change.doc.data(), doc.data().town, change.doc.id);
                   reviewed_data_count++;
-                } else if (change.doc.data().review_state != '1' && change.doc.data().town === doc.data().town) {
-                  if(reviewed_data_count === 0){
-                    reviewed_data_count = 0;
-                  }else{
-                    reviewed_data_count--;
-                  }
+                  // displayNotification();
                 }
-                if (change.doc.data().review_state != '1') {
+                //if doc review current cases = 1
+                if (change.doc.data().review_state === '1' && change.doc.data().town === doc.data().town) {
+                  doc_current_list(change.doc.data(), doc.data().town, change.doc.id);
+                  current_data_count++;
+                  // displayNotification();
+                }
+                //if doc history = 3
+                if (change.doc.data().review_state === '3') {
+                  doc_history_list(change.doc.data());
                   history_data_count++;
-                } else if (change.doc.data().review_state != '1' && change.doc.data().town === doc.data().town) {
-                  if(history_data_count === 0){
-                    history_data_count = 0;
-                  }else{
-                    history_data_count--;
-                  }
+                  // displayNotification();
                 }
-                doc_current_list(change.doc.data(), doc.data().town, change.doc.id);
-                agentListView(change.doc.data());
-                doc_history_list(change.doc.data());
-              }
+
+              } //end if()
 
             }, err => console.log());
             current_data_counter_display.forEach(item => item.style.display = 'block');
@@ -123,11 +126,12 @@ auth.onAuthStateChanged(user => {
       });
 
   } else {
+    progress.style.visibility = "hidden";
     setupUI();
     agentListView([]);
-    doc_current_list([]);
     doc_history_list([]);
-    progress.style.visibility = "hidden";
+    doc_current_list([]);
+    
   }
 });
 
@@ -155,7 +159,7 @@ signupForm.addEventListener('submit', (e) => {
   auth.createUserWithEmailAndPassword(email, password).then(cred => {
     return db.collection('users').doc(cred.user.uid).set({
       bio: signupForm['signup-bio'].value,
-      town: signupForm['town'].value,
+      town: signupForm['town1'].value,
       email: email
     });
   }).then(() => {
@@ -194,32 +198,34 @@ signupForm.addEventListener('submit', (e) => {
 // LOGOUT
 const logout = document.querySelector('#logout');
 logout.addEventListener('click', (e) => {
-  e.preventDefault();
   progress.style.visibility = "visible";
-  auth.signOut();
-  brand_logo.innerHTML = 'Tele [Health]';
-  localStorage.setItem("user", "unknown");
-  var text = '<span>STATUS: Thank you, Goodbye...</span>';
-  M.toast({
-    html: text
+  auth.signOut().then(function () {
+    brand_logo.innerHTML = 'Tele [Health]';
+    localStorage.setItem("user", "unknown");
+    // var text = '<span>STATUS: Thank you, Goodbye...</span>';
+    // M.toast({
+    //   html: text
+    // });
+    logged_out();
+    console.log("Logged Out");
+    location.assign("index.html");
   });
-  logged_out();
-  console.log("Logged Out");
 });
-// logout2
+// LOGOUT2
 const logout2 = document.querySelector('#logout2');
 logout2.addEventListener('click', (e) => {
-  e.preventDefault();
   progress.style.visibility = "visible";
-  auth.signOut();
-  brand_logo.innerHTML = 'Tele [Health]';
-  localStorage.setItem("user", "unknown");
-  var text = '<span>STATUS: Thank you, Goodbye...</span>';
-  M.toast({
-    html: text
+  auth.signOut().then(function () {
+    brand_logo.innerHTML = 'Tele [Health]';
+    localStorage.setItem("user", "unknown");
+    // var text = '<span>STATUS: Thank you, Goodbye...</span>';
+    // M.toast({
+    //   html: text
+    // });
+    logged_out();
+    console.log("Logged Out");
+    location.assign("index.html");
   });
-  logged_out();
-  console.log("Logged Out");
 });
 
 
@@ -267,6 +273,7 @@ loginForm.addEventListener('submit', (e) => {
             admin();
           }
         });
+        location.assign("index.html");
       })
       .catch(function (error) {
         console.log("Error getting documents: ", error);
@@ -329,7 +336,7 @@ form2.addEventListener('submit', (e) => {
     });
 
     var patient_temp = '',
-      patient_bp = '',
+      patient_bp1 = '',
       patient_weight = '';
     if (form2.patient_temp.value == null || form2.patient_temp.value == "") {
       patient_temp = 'Non';
@@ -337,11 +344,11 @@ form2.addEventListener('submit', (e) => {
       patient_temp = form2.patient_temp.value + '℃';
     }
 
-    if (form2.patient_bp.value == null || form2.patient_bp.value == "") {
-      patient_bp = 'Non';
+    if (form2.patient_bp2.value == null || form2.patient_bp1.value == "") {
+      patient_bp1 = 'Non';
       console.log('Non');
     } else {
-      patient_bp = form2.patient_bp.value + 'mmHg';
+      patient_bp1 = form2.patient_bp1.value + '/' + form2.patient_bp2.value + 'mmHg';
     }
 
     if (form2.patient_weight.value == null || form2.patient_weight.value == "") {
@@ -357,7 +364,7 @@ form2.addEventListener('submit', (e) => {
       ageType: form2.ageType.value,
       sex: document.querySelector('input[name=sex]:checked').value,
       patient_temp: patient_temp,
-      patient_bp: patient_bp,
+      patient_bp: patient_bp1,
       patient_weight: patient_weight,
       textarea1: form2.textarea1.value,
       priority: form2.priority.value,
@@ -406,7 +413,7 @@ form2.addEventListener('submit', (e) => {
 
 
 
-//DOC SEND REVIEWED DATA
+//DOC SENDING REVIEWED DATA
 doc_med_response_list.addEventListener('click', evt => {
   if (evt.target.tagName === 'A') {
     home_loader.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
@@ -443,7 +450,7 @@ doc_med_response_list.addEventListener('click', evt => {
           var medical_data = document.querySelector(`.medical_data[data-id=${id}]`);
           medical_data.style.display = 'none';
           home_loader.innerHTML = '<i class="material-icons white-text">home</i>';
-
+          current_data_counter_display.forEach(item => item.innerHTML = '-');
         }).catch(err => {
           var text = '<span class="white-text text-darken-1"><b>Unexpected Error Occurred...<i class="material-icons">check_box</i></b></span>';
           M.toast({
@@ -461,6 +468,47 @@ doc_med_response_list.addEventListener('click', evt => {
       console.log('Fill In Form Correctly...');
       home_loader.innerHTML = '<i class="material-icons white-text">home</i>';
     } //end else
+
+  } //end if()
+});
+
+
+
+
+
+
+
+
+
+
+
+//AGENT FINISHED ATTENTING TO...
+guideList.addEventListener('click', evt => {
+  if (evt.target.tagName === 'A') {
+    home_loader.innerHTML = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
+    var id = evt.target.getAttribute('data-id');
+
+    db.collection('guides').doc(id).update({
+        review_state: '3'
+      })
+      .then(function () {
+        console.log("We hope your patient gets well soon!");
+        var text = '<span class="white-text text-darken-1"><b>We hope your patient gets well soon!</b></span>';
+        M.toast({
+          html: text
+        });
+        var medical_data_done = document.querySelector(`.medical_data_done[data-id=${id}]`);
+        medical_data_done.style.display = 'none';
+        home_loader.innerHTML = '<i class="material-icons white-text">home</i>';
+        reviewed_data_counter_display.forEach(item => item.innerHTML = '-');
+      }).catch(err => {
+        var text = '<span class="white-text text-darken-1"><b>Unexpected Error Occurred...<i class="material-icons">check_box</i></b></span>';
+        M.toast({
+          html: text
+        });
+        home_loader.innerHTML = '<i class="material-icons white-text">home</i>';
+        console.log(err.message);
+      });
 
   } //end if()
 });

@@ -1,10 +1,10 @@
 {
-  "name": "Food Ninja",
-  "short_name": "CookNinja",
+  "name": "TeleHealth",
+  "short_name": "TeleHealth",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#FFE9D2",
-  "theme_color": "#FFE1C4",
+  "background_color": "#424242",
+  "theme_color": "#2e7d32",
   "orientation": "portrait-primary",
   "icons": [
     {
