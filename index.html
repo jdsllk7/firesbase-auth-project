@@ -6,16 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Compiled and minified CSS -->
+  <link rel="manifest" href="/manifest.json">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <link href="css/style.css" rel="stylesheet" />
+  <link rel="icon" type="image/gif" href="img/icons/icon-72x72.png">
+  <link rel="shortcut icon" href="img/icons/icon-72x72.png">
+
+  <meta name="theme-color" content="#2e7d32">
 </head>
 
 <body class="grey darken-3">
-
-
 
   <!-- top nav -->
   <div class="navbar-fixed">
@@ -146,16 +149,16 @@
   <!-- SIGN UP MODAL -->
   <div id="modal-signup" class="modal">
     <div class="modal-content">
-      <h4>Register Account</h4><br />
-      <form id="signup-form">
+      <h4>Register Account</h4><br/>
+      <form autocomplete="on" id="signup-form">
 
         <div class="input-field">
-          <input type="email" id="signup-email" required />
+          <input autocomplete="on" type="email" id="signup-email" required />
           <label for="signup-email">Email address</label>
         </div>
 
         <div class="input-field">
-          <input type="password" id="signup-password" required />
+          <input autocomplete="on" type="password" id="signup-password" required />
           <label for="signup-password">Enter Medical ID</label>
         </div>
 
@@ -169,7 +172,7 @@
         </div>
 
         <div class="input-field">
-          <select id="town" required>
+          <select id="town1" required>
             <option value="" selected>-Select-</option>
             <option value="Kitwe">Kitwe</option>
             <option value="Ndola">Ndola</option>
@@ -191,13 +194,13 @@
   <div id="modal-login" class="modal">
     <div class="modal-content">
       <h4>Login</h4><br />
-      <form id="login-form">
+      <form autocomplete="on" id="login-form">
         <div class="input-field">
-          <input type="email" id="login-email" required />
+          <input autocomplete="on" type="email" id="login-email" required />
           <label for="login-email">Email address</label>
         </div>
         <div class="input-field">
-          <input type="password" id="login-password" value="000000" required />
+          <input autocomplete="on" type="password" id="login-password" value="000000" required />
           <label for="login-password">Your password</label>
         </div>
         <button class="btn green darken-3 z-depth-0" style="" id="login_btn">Login</button>
@@ -224,7 +227,7 @@
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5">
-            <span class="new badge green doc nav_badge current_data_counter_display" id='' style="display: none;"
+          <span class="new badge green doc nav_badge current_data_counter_display" id='' style="display: none;"
             data-badge-caption=""></span>
           <div class="card-content white-text">
             <span class="card-title blue-grey-text">Review Current Cases</span>
@@ -239,7 +242,7 @@
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5">
-            <span class="new badge green doc nav_badge history_data_counter_display" id='' style="display: none;"
+          <span class="new badge green doc nav_badge history_data_counter_display" id='' style="display: none;"
             data-badge-caption=""></span>
           <div class="card-content white-text">
             <span class="card-title blue-grey-text">View Medical Achieves</span>
@@ -256,11 +259,24 @@
 
 
 
+  <!----------------------------- MAP -------------------------->
+  <div class="container map_ui hide_ui" style="margin-top: 40px; display: none;">
+    <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
+            offset-s1 white-text">Locating: <span class="locate_name">...</span></h5>
+    <div class="col s12" style="border:1px solid #ccc; margin-top:0px;">
+      <div id='map' class="card-panel transparent" style="border:1px solid #ccc;height:490px;">
+        <span class="white-text">Loading Map...</span>
+      </div>
+    </div>
+  </div>
+
+
   <!----------------------------- DOC CURRENT LIST -------------------------->
   <div class="container doc_med_response_ui hide_ui" style="margin-top: 40px; display: none;">
+    <span class="new badge green doc nav_badge current_data_counter_display" id='' style="display: none;"
+      data-badge-caption=""></span>
     <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
-            offset-s1 white-text">Review Current Cases
-      <i class="material-icons">clear_all</i></h5>
+            offset-s1 white-text">Review Current Cases</h5>
     <ul class="collapsible z-depth-0 doc_med_response_list" style="border: none; display: none;">
       <!-- output rendered in index.js  -->
     </ul>
@@ -271,9 +287,10 @@
 
   <!----------------------------- DOC ACHIEVE LIST -------------------------->
   <div class="container doc_med_history_ui hide_ui" style="margin-top: 40px; display: none;">
+    <span class="new badge green doc nav_badge history_data_counter_display" id='' style="display: none;"
+      data-badge-caption=""></span>
     <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
-            offset-s1 white-text">View Medical Achieves
-      <i class="material-icons">clear_all</i></h5>
+            offset-s1 white-text">View Medical Achieves</h5>
     <ul class="collapsible z-depth-0 doc_med_history_list" style="border: none; display: none;">
       <!-- output rendered in index.js  -->
     </ul>
@@ -325,12 +342,12 @@
             <p class="blue-grey-text">Give someone else the ability to register and open account
               <!-- <hr style="width:90%;"> -->
             </p>
-            <form class="admin-actions admin">
+            <form autocomplete="on" class="admin-actions admin">
               <div class="input-field">
-                <input type="email" id="admin-email" required />
+                <input autocomplete="on" type="email" id="admin-email" required />
                 <label for="admin-email">Email address</label>
               </div>
-              <!-- <input class="black-text" type="email" placeholder="User email" id="admin-email" required /> -->
+              <!-- <input autocomplete="on" class="black-text" type="email" placeholder="User email" id="admin-email" required /> -->
               <button class="btn-small green darken-3 z-depth-0" id="status_upgrade_btn">Make admin</button>
             </form>
           </div>
@@ -370,7 +387,7 @@
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card blue-grey lighten-5">
-            <span class="new badge green agent nav_badge reviewed_data_counter_display" id='' style="display: none;"
+          <span class="new badge green agent nav_badge reviewed_data_counter_display" id='' style="display: none;"
             data-badge-caption=""></span>
           <div class="card-content white-text">
             <span class="card-title blue-grey-text">Reviewed Records</span>
@@ -404,9 +421,10 @@
 
   <!----------------------------- AGENT RECORDS LIST -------------------------->
   <div class="container agent_list hide_ui" style="margin-top: 40px; display: none;">
+    <span class="new badge green agent nav_badge reviewed_data_counter_display" id='' style="display: none;"
+      data-badge-caption=""></span>
     <h5 style="margin-bottom:20px;margin-top:40px;" class="col s10
-            offset-s1 white-text">Reviewed Patient Records
-      <i class="material-icons">clear_all</i></h5>
+            offset-s1 white-text">Reviewed Patient Records</h5>
     <ul class="collapsible z-depth-0 guides" style="border: none; display: none;">
       <!-- output rendered in index.js  -->
     </ul>
@@ -418,7 +436,8 @@
 
 
   <!----------------------------------------AGENT FORM ------------------------------------------->
-  <form class="container row white-text agent_form hide_ui" id="patient_form_id" style="display: none;">
+  <form autocomplete="on" class="container row white-text agent_form hide_ui" id="patient_form_id"
+    style="display: none;">
 
     <div>
 
@@ -427,12 +446,12 @@
         <i class="material-icons">info_outline</i></h5>
 
       <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-        <input id="patient_name" type="text" class="validate" name="patient_name" value="Joshua Lungu" required>
+        <input autocomplete="on" id="patient_name" type="text" class="validate" name="patient_name" value="" required>
         <label for="patient_name" class="white-text">Full Name</label>
       </div>
 
       <div style="margin-bottom:20px;" class="input-field col s5 offset-s1">
-        <input id="patient_age" type="number" class="validate" value="34" name="patient_age" required>
+        <input autocomplete="on" id="patient_age" type="number" class="validate" value="" name="patient_age" required>
         <label for="patient_age" class="white-text">Age</label>
       </div>
       <div class="input-field col s5">
@@ -449,13 +468,13 @@
         <p class="col s10"><b>SEX</b></p>
         <p>
           <label class="white-text" for="male">
-            <input class="with-gap white" id="male" name="sex" value="Male" type="radio" checked />
+            <input autocomplete="on" class="with-gap white" id="male" name="sex" value="Male" type="radio" checked />
             <span>Male</span>
           </label>
         </p>
         <p>
           <label class="white-text" for="female">
-            <input class="with-gap white" id="female" name="sex" value="Female" type="radio" />
+            <input autocomplete="on" class="with-gap white" id="female" name="sex" value="Female" type="radio" />
             <span>Female</span>
           </label>
         </p>
@@ -468,26 +487,31 @@
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-      <input id="patient_temp" type="text" value="34" class="validate" name="patient_temp">
+      <input autocomplete="on" id="patient_temp" type="text" value="" class="validate col s8" name="patient_temp">
+      <span class="col s2">℃</span>
       <label for="patient_temp" class="white-text">Temperature (℃)</label>
     </div>
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-      <input id="patient_bp" type="text" value="112/178" class="validate" name="patient_bp">
-      <label for="patient_bp" class="white-text">Blood Pressure (mmHg)</label>
+      <input autocomplete="on" id="patient_bp1" type="number" value="" class="validate col s3">
+      <span class="col s2">/</span>
+      <input autocomplete="on" id="patient_bp2" type="number" value="" class="validate col s3">
+      <span class="col s2">mmHg</span>
+      <label for="patient_bp1" class="white-text">Blood Pressure (mmHg)</label>
     </div>
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-      <input id="patient_weight" type="text" value="68" class="validate" name="patient_weight">
+      <input autocomplete="on" id="patient_weight" type="text" value="" class="validate col s8" name="patient_weight">
+      <span class="col s2">kg</span>
       <label for="patient_weight" class="white-text">Weight (kg)</label>
     </div>
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
       <textarea name="extraInfo" id="textarea1" class="materialize-textarea" maxlength="200"
-        data-length="200">The is clearly something wrong with this person!</textarea>
+        data-length="200"></textarea>
       <label for="textarea1" class="white-text">Extra info (Optional)</label>
     </div>
 
@@ -507,11 +531,11 @@
 
     <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
       <select name="town" id="town" required>
-        <option value="">-Select-</option>
+        <option value="" selected>-Select-</option>
         <option value="Kitwe">Kitwe</option>
         <option value="Ndola">Ndola</option>
         <option value="Mufulira">Mufulira</option>
-        <option value="Luanshya" selected>Luanshya</option>
+        <option value="Luanshya">Luanshya</option>
         <option value="Chingola">Chingola</option>
         <option value="Chililabombwe">Chililabombwe</option>
       </select>
@@ -521,7 +545,7 @@
 
     <div style="margin-bottom:30px;" class="input-field col s10 offset-s1">
       <select name="location" id="location" onchange="getLocation()" required>
-        <option value="">-Select-</option>
+        <option value="" selected>-Select-</option>
         <option value="Health Center">Health Center</option>
         <option value="Remote Location">Remote Location</option>
       </select>
@@ -580,10 +604,13 @@
 
   <!-- Compiled and minified JavaScript -->
 
+  <script src="scripts/app.js"></script>
   <script src="scripts/init.js"></script>
   <script src="scripts/index.js"></script>
   <script src="scripts/auth.js"></script>
   <script src="scripts/pin_location.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4bSJTKEB7naiqu0LSYp27SQmglUyZ-Jo&callback=initMap"
+    async defer> </script>
 
 
 </body>
