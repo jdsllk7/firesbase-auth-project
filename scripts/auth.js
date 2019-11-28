@@ -102,8 +102,8 @@ auth.onAuthStateChanged(user => {
                     abc1++;
                   }
                   if(abc === 1 && change.doc.data().agent_email === user.email){
-                    displayNotification('Hello Agent');
-                    abc++;
+                    displayNotification('Hello doll');
+                    abc=10;
                   }
 
                 }
