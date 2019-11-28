@@ -101,6 +101,9 @@ auth.onAuthStateChanged(user => {
                     displayNotification('Hello Agent');
                     abc1++;
                   }
+                  if(abc === 1 && change.doc.data().agent_email === user.email && abc === 0){
+                    displayNotification('Hello Agent');
+                  }
 
                 }
                 //if doc review current cases = 1
@@ -114,6 +117,9 @@ auth.onAuthStateChanged(user => {
                   if (change.type === "modified" && change.doc.data().doc_email === user.email && xyz1 === 0) {
                     displayNotification('Hello Doctor');
                     xyz1++;
+                  }
+                  if(abc === 1 && change.doc.data().doc_email === user.email && abc === 0){
+                    displayNotification('Hello Doctor');
                   }
                 }
                 //if doc history = 3
