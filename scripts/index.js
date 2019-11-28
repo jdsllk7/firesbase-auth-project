@@ -208,7 +208,7 @@ const setupUI = (user) => {
     loggedOutLinks.forEach(item => item.style.display = 'none');
 
     if (user_type === "Command Center") {
-      brand_logo.innerHTML = user_type;
+      brand_logo.innerHTML = 'Boss';
       if (state === "admin") {
         admin();
       }
