@@ -89,13 +89,18 @@ auth.onAuthStateChanged(user => {
                 if (change.doc.data().review_state === '2' && change.doc.data().town === doc.data().town) {
                   agentListView(change.doc.data(), doc.data().town, change.doc.id);
                   reviewed_data_count++;
-                  // displayNotification();
+                  if (change.doc.data().agent_email === user.email) {
+                    displayNotification();
+                  }
+
                 }
                 //if doc review current cases = 1
                 if (change.doc.data().review_state === '1' && change.doc.data().town === doc.data().town) {
                   doc_current_list(change.doc.data(), doc.data().town, change.doc.id);
                   current_data_count++;
-                  // displayNotification();
+                  if (change.doc.data().agent_email === user.email) {
+                    displayNotification();
+                  }
                 }
                 //if doc history = 3
                 if (change.doc.data().review_state === '3') {
@@ -131,7 +136,7 @@ auth.onAuthStateChanged(user => {
     agentListView([]);
     doc_history_list([]);
     doc_current_list([]);
-    
+
   }
 });
 
