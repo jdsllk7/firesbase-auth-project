@@ -67,6 +67,8 @@ adminForm.addEventListener('submit', (e) => {
 // LISTEN FOR AUTH STATUS CHANGES
 var abc = 0;
 var xyz = 0;
+var abc1 = 0;
+var xyz1 = 0;
 auth.onAuthStateChanged(user => {
   if (user) {
     user.getIdTokenResult().then(idTokenResult => {
@@ -95,8 +97,9 @@ auth.onAuthStateChanged(user => {
                     displayNotification('Hello Agent');
                     abc++;
                   }
-                  if (change.type === "modified" && change.doc.data().agent_email === user.email) {
+                  if (change.type === "modified" && change.doc.data().agent_email === user.email && abc1 === 0) {
                     displayNotification('Hello Agent');
+                    abc1++;
                   }
 
                 }
@@ -108,8 +111,9 @@ auth.onAuthStateChanged(user => {
                     displayNotification('Hello Doctor');
                     xyz++;
                   }
-                  if (change.type === "modified" && change.doc.data().agent_email === user.email) {
+                  if (change.type === "modified" && change.doc.data().agent_email === user.email && xyz1 === 0) {
                     displayNotification('Hello Doctor');
+                    xyz1++;
                   }
                 }
                 //if doc history = 3
