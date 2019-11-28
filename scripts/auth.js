@@ -94,7 +94,7 @@ auth.onAuthStateChanged(user => {
                   agentListView(change.doc.data(), doc.data().town, change.doc.id);
                   reviewed_data_count++;
                   if(abc === 1 && change.doc.data().agent_email === user.email){
-                    displayNotification('Hello A');
+                    displayNotification('Hello Agent');
                     abc=10;
                   }
                   if (change.doc.data().agent_email === user.email && abc === 0) {
@@ -112,7 +112,7 @@ auth.onAuthStateChanged(user => {
                   doc_current_list(change.doc.data(), doc.data().town, change.doc.id);
                   current_data_count++;
                   if(xyz === 1 && change.doc.data().doc_email === user.email){
-                    displayNotification('Hello D');
+                    displayNotification('Hello Doctor');
                     xyz=10;
                   }
                   if (change.doc.data().doc_email === user.email && xyz === 0) {
