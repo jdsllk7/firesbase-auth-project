@@ -370,7 +370,7 @@
             <p class="blue-grey-text">A Quick & Efficient Medical Response System
               <hr style="width:90%;">
             </p>
-            <p class="blue-grey-text">Baby</p>
+            <p class="blue-grey-text">Mike</p>
             <p class="blue-grey-text">You are currently logged out.<br>Please login to make use of the system.</p>
           </div>
           <div class="card-action">
@@ -452,7 +452,7 @@
       </div>
 
       <div style="margin-bottom:20px;" class="input-field col s5 offset-s1">
-        <input autocomplete="on" id="patient_age" type="number" class="validate" value="" name="patient_age" required>
+        <input autocomplete="on" id="patient_age" type="number" min="1" class="validate" value="" name="patient_age" required>
         <label for="patient_age" class="white-text">Age</label>
       </div>
       <div class="input-field col s5">
@@ -488,23 +488,23 @@
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-      <input autocomplete="on" id="patient_temp" type="number" value="" class="validate col s8" name="patient_temp">
+      <input autocomplete="on" id="patient_temp" type="number" value="" min="1" class="validate col s8" name="patient_temp">
       <span class="col s2">℃</span>
       <label for="patient_temp" class="white-text">Temperature (℃)</label>
     </div>
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-      <input autocomplete="on" id="patient_bp1" type="number" value="" class="validate col s3">
+      <input autocomplete="on" id="patient_bp1" type="number" value="" min="1" class="validate col s3">
       <span class="col s2">/</span>
-      <input autocomplete="on" id="patient_bp2" type="number" value="" class="validate col s3">
+      <input autocomplete="on" id="patient_bp2" type="number" min="1" value="" class="validate col s3">
       <span class="col s2">mmHg</span>
       <label for="patient_bp1" class="white-text">Blood Pressure (mmHg)</label>
     </div>
 
 
     <div style="margin-bottom:20px;" class="input-field col s10 offset-s1">
-      <input autocomplete="on" id="patient_weight" type="number" value="" class="validate col s8" name="patient_weight">
+      <input autocomplete="on" id="patient_weight" type="number" min="1" value="" class="validate col s8" name="patient_weight">
       <span class="col s2">kg</span>
       <label for="patient_weight" class="white-text">Weight (kg)</label>
     </div>

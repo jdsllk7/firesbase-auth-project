@@ -111,7 +111,7 @@ auth.onAuthStateChanged(user => {
                     displayNotification('Hello Doctor');
                     xyz++;
                   }
-                  if (change.type === "modified" && change.doc.data().agent_email === user.email && xyz1 === 0) {
+                  if (change.type === "modified" && change.doc.data().doc_email === user.email && xyz1 === 0) {
                     displayNotification('Hello Doctor');
                     xyz1++;
                   }
