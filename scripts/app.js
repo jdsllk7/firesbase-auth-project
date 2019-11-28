@@ -14,10 +14,7 @@ function displayNotification(msg) {
   const options = {
     body: 'VIEW INCOMING DATA?',
     vibrate: [100, 50, 100],
-    data: { primaryKey: 1 },
-    actions: [
-      {action: 'go', title: '\tOKAY'}
-    ]
+    data: { primaryKey: 1 }
   };
 
   if (Notification.permission === 'granted') {
