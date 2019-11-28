@@ -103,6 +103,7 @@ auth.onAuthStateChanged(user => {
                   }
                   if(abc === 1 && change.doc.data().agent_email === user.email){
                     displayNotification('Hello Agent');
+                    abc++;
                   }
 
                 }
@@ -120,6 +121,7 @@ auth.onAuthStateChanged(user => {
                   }
                   if(xyz === 1 && change.doc.data().doc_email === user.email){
                     displayNotification('Hello Doctor');
+                    xyz++;
                   }
                 }
                 //if doc history = 3
