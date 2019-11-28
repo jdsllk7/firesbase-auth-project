@@ -92,8 +92,11 @@ auth.onAuthStateChanged(user => {
                   agentListView(change.doc.data(), doc.data().town, change.doc.id);
                   reviewed_data_count++;
                   if (change.doc.data().agent_email === user.email && abc === 0) {
-                    displayNotification(change.doc.data().patient_name);
+                    displayNotification('Hello Agent');
                     abc++;
+                  }
+                  if (change.type === "modified" && change.doc.data().agent_email === user.email) {
+                    displayNotification('Hello Agent');
                   }
 
                 }
@@ -102,8 +105,11 @@ auth.onAuthStateChanged(user => {
                   doc_current_list(change.doc.data(), doc.data().town, change.doc.id);
                   current_data_count++;
                   if (change.doc.data().doc_email === user.email && xyz === 0) {
-                    displayNotification(change.doc.data().patient_name);
+                    displayNotification('Hello Doctor');
                     xyz++;
+                  }
+                  if (change.type === "modified" && change.doc.data().agent_email === user.email) {
+                    displayNotification('Hello Doctor');
                   }
                 }
                 //if doc history = 3
