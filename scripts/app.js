@@ -9,7 +9,7 @@ Notification.requestPermission(status => {
 });
 
 // displayNotification();
-function displayNotification() {
+function displayNotification(msg) {
 
   const options = {
     body: 'VIEW INCOMING DATA?',
@@ -24,7 +24,7 @@ function displayNotification() {
     navigator.serviceWorker.getRegistration()
       .then(reg => {
         // reg.clear
-        reg.showNotification('', options);
+        reg.showNotification(msg, options);
       });
   }
 }//ene displayNotification() 

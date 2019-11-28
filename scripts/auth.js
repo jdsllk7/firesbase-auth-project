@@ -65,6 +65,7 @@ adminForm.addEventListener('submit', (e) => {
 
 
 // LISTEN FOR AUTH STATUS CHANGES
+var abc = 0;
 auth.onAuthStateChanged(user => {
   if (user) {
     user.getIdTokenResult().then(idTokenResult => {
@@ -89,8 +90,9 @@ auth.onAuthStateChanged(user => {
                 if (change.doc.data().review_state === '2' && change.doc.data().town === doc.data().town) {
                   agentListView(change.doc.data(), doc.data().town, change.doc.id);
                   reviewed_data_count++;
-                  if (change.doc.data().agent_email === user.email) {
-                    displayNotification();
+                  if (change.doc.data().agent_email === user.email && abc === 0) {
+                    displayNotification('agentListView');
+                    abc++;
                   }
 
                 }
