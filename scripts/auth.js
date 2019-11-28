@@ -101,7 +101,7 @@ auth.onAuthStateChanged(user => {
                     displayNotification('Hello Agent');
                     abc1++;
                   }
-                  if(abc === 1 && change.doc.data().agent_email === user.email && abc === 0){
+                  if(abc === 1 && change.doc.data().agent_email === user.email){
                     displayNotification('Hello Agent');
                   }
 
@@ -118,7 +118,7 @@ auth.onAuthStateChanged(user => {
                     displayNotification('Hello Doctor');
                     xyz1++;
                   }
-                  if(abc === 1 && change.doc.data().doc_email === user.email && abc === 0){
+                  if(xyz === 1 && change.doc.data().doc_email === user.email){
                     displayNotification('Hello Doctor');
                   }
                 }
