@@ -93,6 +93,10 @@ auth.onAuthStateChanged(user => {
                 if (change.doc.data().review_state === '2' && change.doc.data().town === doc.data().town) {
                   agentListView(change.doc.data(), doc.data().town, change.doc.id);
                   reviewed_data_count++;
+                  if(abc === 1 && change.doc.data().agent_email === user.email){
+                    displayNotification('Hello A');
+                    abc=10;
+                  }
                   if (change.doc.data().agent_email === user.email && abc === 0) {
                     displayNotification('Hello Agent');
                     abc++;
@@ -101,16 +105,16 @@ auth.onAuthStateChanged(user => {
                     displayNotification('Hello Agent');
                     abc1++;
                   }
-                  if(abc === 1 && change.doc.data().agent_email === user.email){
-                    displayNotification('Hello doll');
-                    abc=10;
-                  }
-
+                  
                 }
                 //if doc review current cases = 1
                 if (change.doc.data().review_state === '1' && change.doc.data().town === doc.data().town) {
                   doc_current_list(change.doc.data(), doc.data().town, change.doc.id);
                   current_data_count++;
+                  if(xyz === 1 && change.doc.data().doc_email === user.email){
+                    displayNotification('Hello D');
+                    xyz=10;
+                  }
                   if (change.doc.data().doc_email === user.email && xyz === 0) {
                     displayNotification('Hello Doctor');
                     xyz++;
@@ -119,10 +123,7 @@ auth.onAuthStateChanged(user => {
                     displayNotification('Hello Doctor');
                     xyz1++;
                   }
-                  if(xyz === 1 && change.doc.data().doc_email === user.email){
-                    displayNotification('Hello Doctor');
-                    xyz++;
-                  }
+                  
                 }
                 //if doc history = 3
                 if (change.doc.data().review_state === '3') {
