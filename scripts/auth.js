@@ -97,7 +97,7 @@ auth.onAuthStateChanged(user => {
                   //   displayNotification('Hello Agent');
                   //   abc=10;
                   // }
-                  if (change.doc.data().agent_email === user.email && abc === 0) {
+                  if (change.doc.data().agent_email === user.email && abc === 0 && localStorage.getItem("map_state") != "map_ui") {
                     displayNotification('Hello Agent');
                     abc++;
                   }
@@ -115,7 +115,7 @@ auth.onAuthStateChanged(user => {
                   //   displayNotification('Hello Doctor');
                   //   xyz=10;
                   // }
-                  if (change.doc.data().doc_email === user.email && xyz === 0) {
+                  if (change.doc.data().doc_email === user.email && xyz === 0 && localStorage.getItem("map_state") != "map_ui") {
                     displayNotification('Hello Doctor');
                     xyz++;
                   }
