@@ -422,7 +422,7 @@ const doc_current_list = (guide1, town, id) => {
 
   doc_med_response_list.style = 'block'; 
 
-  if (guide1.review_state === '1') {
+  if (guide1.review_state != '7') {
 
     var critical_state = '';
     if (guide1.priority === 'Critical') {
