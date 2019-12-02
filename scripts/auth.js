@@ -108,7 +108,7 @@ auth.onAuthStateChanged(user => {
                   
                 }
                 //if doc review current cases = 1
-                if (change.doc.data().review_state === '1' && change.doc.data().town === doc.data().town) {
+                if (change.doc.data().review_state === '1') {
                   doc_current_list(change.doc.data(), doc.data().town, change.doc.id);
                   current_data_count++;
                   // if(xyz === 1 && change.doc.data().doc_email === user.email){
