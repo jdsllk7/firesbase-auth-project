@@ -422,7 +422,7 @@ const doc_current_list = (guide1, town, id) => {
 
   doc_med_response_list.style = 'block'; 
 
-  if (guide1.review_state === '1' && guide1.town === town) {
+  if (guide1.review_state === '1') {
 
     var critical_state = '';
     if (guide1.priority === 'Critical') {
@@ -533,9 +533,9 @@ const doc_current_list = (guide1, town, id) => {
 
 
 
-/**************************************DOC ACHIEVE/HISTORY LIST***********************************/
-/**************************************DOC ACHIEVE/HISTORY LIST***********************************/
-/**************************************DOC ACHIEVE/HISTORY LIST***********************************/
+/**************************************DOC ARCHIVES/HISTORY LIST***********************************/
+/**************************************DOC ARCHIVES/HISTORY LIST***********************************/
+/**************************************DOC ARCHIVES/HISTORY LIST***********************************/
 const doc_history_list = (guide1) => {
   doc_med_history_list.style = 'block';
   if (guide1.review_state === '3') {
