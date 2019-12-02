@@ -98,11 +98,11 @@ auth.onAuthStateChanged(user => {
                   //   abc=10;
                   // }
                   if (change.doc.data().agent_email === user.email && abc === 0 && localStorage.getItem("map_state") != "map_ui") {
-                    displayNotification('Hello Agent');
+                    // displayNotification('Hello Agent');
                     abc++;
                   }
                   if (change.type === "modified" && change.doc.data().agent_email === user.email && abc1 === 0) {
-                    displayNotification('Hello Agent');
+                    // displayNotification('Hello Agent');
                     abc1++;
                   }
                   
@@ -116,11 +116,11 @@ auth.onAuthStateChanged(user => {
                   //   xyz=10;
                   // }
                   if (change.doc.data().doc_email === user.email && xyz === 0 && localStorage.getItem("map_state") != "map_ui") {
-                    displayNotification('Hello Doctor');
+                    // displayNotification('Hello Doctor');
                     xyz++;
                   }
                   if (change.type === "modified" && change.doc.data().doc_email === user.email && xyz1 === 0) {
-                    displayNotification('Hello Doctor');
+                    // displayNotification('Hello Doctor');
                     xyz1++;
                   }
                   
