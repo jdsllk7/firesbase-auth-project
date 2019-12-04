@@ -86,7 +86,7 @@ auth.onAuthStateChanged(user => {
           var reviewed_data_count = 0;
           db.collection('guides').onSnapshot(snapshot => {
             snapshot.docChanges().forEach(change => {
-              console.log(change.doc.data());
+              console.log(change.type);
               if (change) {
 
                 //if send data = 2
