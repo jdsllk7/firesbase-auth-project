@@ -87,7 +87,7 @@ auth.onAuthStateChanged(user => {
           db.collection('guides').onSnapshot(snapshot => {
             console.log(snapshot);
             snapshot.docChanges().forEach(change => {
-              console.log(change.type);
+              //console.log(change.type);
               if (change) {
 
                 //if send data = 2
