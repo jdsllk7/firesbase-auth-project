@@ -8,7 +8,7 @@ Notification.requestPermission(status => {
   // console.log('Notification Permission Status', status);
 });
 
-// displayNotification();
+// displayNotification("jdslk");
 function displayNotification(msg) {
 
   const options = {

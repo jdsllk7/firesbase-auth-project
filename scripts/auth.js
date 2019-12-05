@@ -65,10 +65,6 @@ adminForm.addEventListener('submit', (e) => {
 
 
 // LISTEN FOR AUTH STATUS CHANGES
-var abc = 0;
-var xyz = 0;
-var abc1 = 0;
-var xyz1 = 0;
 auth.onAuthStateChanged(user => {
   if (user) {
     user.getIdTokenResult().then(idTokenResult => {
@@ -86,50 +82,23 @@ auth.onAuthStateChanged(user => {
           var reviewed_data_count = 0;
           db.collection('guides').onSnapshot(snapshot => {
             snapshot.docChanges().forEach(change => {
-              console.log(change.newIndex);
+              // console.log(change.newIndex);
               if (change) {
 
                 //if send data = 2
                 if (change.doc.data().review_state === '2' && change.doc.data().town === doc.data().town) {
                   agentListView(change.doc.data(), doc.data().town, change.doc.id);
                   reviewed_data_count++;
-                  // if(abc === 1 && change.doc.data().agent_email === user.email){
-                  //   displayNotification('Hello Agent');
-                  //   abc=10;
-                  // }
-                  if (change.doc.data().agent_email === user.email && abc === 0 && localStorage.getItem("map_state") != "map_ui") {
-                    // displayNotification('Hello Agent');
-                    abc++;
-                  }
-                  if (change.type === "modified" && change.doc.data().agent_email === user.email && abc1 === 0) {
-                    // displayNotification('Hello Agent');
-                    abc1++;
-                  }
-                  
                 }
                 //if doc review current cases = 1
                 if (change.doc.data().review_state === '1') {
                   doc_current_list(change.doc.data(), doc.data().town, change.doc.id);
                   current_data_count++;
-                  // if(xyz === 1 && change.doc.data().doc_email === user.email){
-                  //   displayNotification('Hello Doctor');
-                  //   xyz=10;
-                  // }
-                  if (change.doc.data().doc_email === user.email && xyz === 0 && localStorage.getItem("map_state") != "map_ui") {
-                    // displayNotification('Hello Doctor');
-                    xyz++;
-                  }
-                  if (change.type === "modified" && change.doc.data().doc_email === user.email && xyz1 === 0) {
-                    // displayNotification('Hello Doctor');
-                    xyz1++;
-                  }
-                  
                 }
                 //if doc history = 3
                 if (change.doc.data().review_state === '3') {
                   doc_history_list(change.doc.data());
                   history_data_count++;
-                  // displayNotification();
                 }
 
               } //end if()
@@ -159,7 +128,6 @@ auth.onAuthStateChanged(user => {
     agentListView([]);
     doc_history_list([]);
     doc_current_list([]);
-
   }
 });
 
