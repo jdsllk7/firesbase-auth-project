@@ -3,7 +3,7 @@ const staticCacheName   = 'site-static-v0';
 const assets = [
     '/',
     '/index.html',
-    '/fallback.html',
+    '/fallback.html', 
     '/img/profile.jpg',
     '/img/Stethoscope.jpg',
     '/img/icons/icon-128x128.png',
