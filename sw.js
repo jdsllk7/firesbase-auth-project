@@ -1,17 +1,13 @@
-const dynamicCacheName = 'site-dynamic-v3';
-const staticCacheName   = 'site-static-v3'; 
+const dynamicCacheName = 'site-dynamic-v1';
+const staticCacheName   = 'site-static-v1'; 
 const assets = [
     '/',
     '/index.html',
     '/fallback.html', 
     '/img/profile.jpg',
     '/img/Stethoscope.jpg',
-    '/img/icons/icon-128x128.png',
     '/img/icons/icon-144x144.png',
-    '/img/icons/icon-152x152.png',
     '/img/icons/icon-192x192.png',
-    '/img/icons/icon-384x384.png',
-    '/img/icons/icon-512x512.png',
     '/img/icons/icon-72x72.png',
     '/img/icons/icon-96x96.png',
     '/manifest.json',
