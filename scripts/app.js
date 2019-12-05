@@ -13,6 +13,7 @@
 
 
 window.isUpdateAvailable = new Promise(function (resolve, reject) {
+  console.log('sw.js');
   // lazy way of disabling service workers while developing
   if ('serviceWorker' in navigator && ['localhost', '127'].indexOf(location.hostname) === -1) {
     // register service worker file
