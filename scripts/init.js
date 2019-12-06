@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var instances = M.FormSelect.init(elems, {});
 
     var modals = document.querySelectorAll('.modal');
-    M.Modal.init(modals);
+    var instance_models = M.Modal.init(modals);
   
     var items = document.querySelectorAll('.collapsible');
     M.Collapsible.init(items);

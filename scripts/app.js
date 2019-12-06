@@ -1,3 +1,4 @@
+console.log("sasas");
 window.isUpdateAvailable = new Promise(function (resolve, reject) {
   // lazy way of disabling service workers while developing
   if ('serviceWorker' in navigator && ['localhost', '127'].indexOf(location.hostname) === -1) {
@@ -12,10 +13,11 @@ window.isUpdateAvailable = new Promise(function (resolve, reject) {
                 if (navigator.serviceWorker.controller) {
                   // New update available
                   console.log("New update available");
-                  var text = '<span>New Updates Available. Reload to Apply</span><button class="btn-flat toast-action">Okay</button>';
-                  M.toast({
-                    html: text
-                  });
+                  // var text = '<span>New Updates Available. Reload to Apply</span><button class="btn-flat toast-action">Okay</button>';
+                  // M.toast({
+                  //   html: text
+                  // });
+                  instance_models.open();
                   resolve(true);
                 } else {
                   console.log("No update available");
