@@ -1,17 +1,3 @@
-// if ('serviceWorker' in navigator) {
-//   navigator.serviceWorker.register('../sw.js')
-//     .then(reg => console.log())
-//     .catch(err => console.log('service worker not registered', err));
-// }
-
-
-
-
-
-
-
-
-console.log("qqqqq");
 window.isUpdateAvailable = new Promise(function (resolve, reject) {
   // lazy way of disabling service workers while developing
   if ('serviceWorker' in navigator && ['localhost', '127'].indexOf(location.hostname) === -1) {
@@ -26,12 +12,14 @@ window.isUpdateAvailable = new Promise(function (resolve, reject) {
                 if (navigator.serviceWorker.controller) {
                   // New update available
                   console.log("New update available");
-                  alert("New update available");
+                  var text = '<span>New Updates Available. Reload to Apply</span><button class="btn-flat toast-action">Okay</button>';
+                  M.toast({
+                    html: text
+                  });
                   resolve(true);
                 } else {
-                  console.log("new update available");
+                  console.log("No update available");
                   // No update available
-                  alert("No update available");
                   resolve(false);
                 }
                 break;
@@ -42,23 +30,6 @@ window.isUpdateAvailable = new Promise(function (resolve, reject) {
       .catch(err => console.error('[SW ERROR]', err));
   }
 });
-
-
-
-
-
-
-// window['isUpdateAvailable']
-//   .then(isAvailable => {
-//     if (isAvailable) {
-//       var text = "<span>New Update available! Reload the web-app to see the latest changes.</span>";
-//         M.toast({
-//           html: text
-//         });
-//     }
-//   });
-
-
 
 
 
