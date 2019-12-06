@@ -24,10 +24,14 @@ window.isUpdateAvailable = new Promise(function (resolve, reject) {
             switch (installingWorker.state) {
               case 'installed':
                 if (navigator.serviceWorker.controller) {
-                  // new update available
+                  // New update available
+                  console.log("New update available");
+                  alert("New update available");
                   resolve(true);
                 } else {
-                  // no update available
+                  console.log("new update available");
+                  // No update available
+                  alert("No update available");
                   resolve(false);
                 }
                 break;
@@ -44,15 +48,15 @@ window.isUpdateAvailable = new Promise(function (resolve, reject) {
 
 
 
-window['isUpdateAvailable']
-  .then(isAvailable => {
-    if (isAvailable) {
-      var text = "<span>New Update available! Reload the web-app to see the latest changes.</span>";
-        M.toast({
-          html: text
-        });
-    }
-  });
+// window['isUpdateAvailable']
+//   .then(isAvailable => {
+//     if (isAvailable) {
+//       var text = "<span>New Update available! Reload the web-app to see the latest changes.</span>";
+//         M.toast({
+//           html: text
+//         });
+//     }
+//   });
 
 
 
