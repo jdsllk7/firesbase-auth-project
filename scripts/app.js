@@ -11,7 +11,7 @@
 
 
 
-console.log("sw.js update");
+console.log("qqqqq");
 window.isUpdateAvailable = new Promise(function (resolve, reject) {
   // lazy way of disabling service workers while developing
   if ('serviceWorker' in navigator && ['localhost', '127'].indexOf(location.hostname) === -1) {
